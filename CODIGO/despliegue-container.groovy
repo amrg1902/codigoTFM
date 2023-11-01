@@ -31,6 +31,22 @@ pipeline {
                 }
             }
         }
+        stage('Desplegar contenedor') {
+            steps {
+                script {
+                    def dockerImageName = "mi_imagen_docker:latest"
+                    def containerName = "mi_contenedor"
+
+                    // Detener y eliminar el contenedor si ya existe (opcional)
+                    sh "docker stop ${containerName} || true"
+                    sh "docker rm ${containerName} || true"
+
+                    // Ejecutar el contenedor a partir de la imagen
+                    sh "docker run -d -p 5005:5005 --name ${containerName} ${dockerImageName}"
+        }
+    }
+}
+
 
     }
 }
