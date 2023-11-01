@@ -1,8 +1,8 @@
 # Utiliza una imagen base de Python con MLflow preinstalado
 FROM python:3.8
 
-# # Establece un directorio de trabajo en el contenedor
-# WORKDIR /app
+# Establece un directorio de trabajo en el contenedor
+WORKDIR /app
 
 # # Instala MLflow y otras dependencias
 # RUN pip install --no-cache-dir mlflow
