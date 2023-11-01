@@ -14,8 +14,6 @@ pipeline {
                     // Mostrar un mensaje en el registro de Jenkins
                     echo "Contenido del archivo ${archivo}:"
                     
-                    // Utilizar 'echo' para mostrar el contenido del archivo
-                    sh "echo \"\$(cat ${archivo})\""
                 }
             }
         }
