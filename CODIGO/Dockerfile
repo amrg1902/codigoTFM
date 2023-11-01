@@ -8,7 +8,7 @@ WORKDIR /app
 RUN pip install --no-cache-dir mlflow
 
 # Expone el puerto en el que se ejecutará el servidor de MLflow
-EXPOSE 5000
+EXPOSE 5005
 
 # Configura MLflow para utilizar una base de datos SQLite
 ENV MLFLOW_SERVER_DEFAULT_ARTIFACT_ROOT /mlflow/artifacts
@@ -19,4 +19,4 @@ RUN mkdir -p /mlflow/artifacts
 RUN mkdir -p /mlflow
 
 # Define el comando para iniciar el servidor de MLflow
-CMD mlflow server --host 0.0.0.0 --port 5000 --backend-store-uri sqlite:////mlflow/mlflow.db --default-artifact-root /mlflow/artifacts
+CMD mlflow server --host 0.0.0.0 --port 5005 --backend-store-uri sqlite:////mlflow/mlflow.db --default-artifact-root /mlflow/artifacts
