@@ -4,9 +4,9 @@ pipeline {
     stages {
         stage('Install MLflow') {
             steps {
-                sh 'python -m venv venv'
+                sh '/Users/aitormartin-romogonzalez/opt/anaconda3/bin/python -m venv venv'
                 sh 'source venv/bin/activate'
-                sh 'pip install mlflow'
+                sh '/Users/aitormartin-romogonzalez/opt/anaconda3/bin/pip install mlflow'
             }
         }
 
