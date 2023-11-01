@@ -6,7 +6,10 @@ pipeline {
             steps {
                 script {
                     // Construir la imagen Docker
-                    docker.build('mi_imagen_mlflow:latest', '-f Dockerfile /Users/aitormartin-romogonzalez/Documents/GitHub/AAA-TFM/CODIGO/')
+                    def dockerfilePath = '/Users/aitormartin-romogonzalez/Documents/GitHub/AAA-TFM/CODIGO/'
+                    dir(dockerfilePath) {
+                        def customImage = docker.build('mi_imagen_mlflow:latest', '.')
+                    }
                 }
             }
         }
