@@ -1,7 +1,9 @@
 pipeline {
     agent any
-    // Obtener la ruta al directorio de trabajo (workspace)
-    def workspaceDir = env.WORKSPACE
+    // Definir workspaceDir fuera de los bloques stages
+    environment {
+        workspaceDir = pwd()
+    }
     stages {
         stage('Acceso a Dockerfile en el Workspace') {
             steps {
