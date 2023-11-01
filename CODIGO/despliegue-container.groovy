@@ -5,7 +5,7 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    sh "sudo docker build -t mlflow:latest ."
+                    sh "docker build -t mlflow:latest ."
                     
                 }
             }
