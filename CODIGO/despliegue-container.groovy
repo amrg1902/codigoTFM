@@ -2,22 +2,22 @@ pipeline {
     agent any
 
     stages {
-        stage('Check PATH') {
+        stage('Acceso a Dockerfile en el Workspace') {
             steps {
                 script {
-                    // Obtenemos el valor de la variable PATH
-                    def path = sh(script: 'echo $PATH', returnStdout: true).trim()
-                    
-                    // Imprimimos el contenido de la variable PATH
-                    echo "Contenido de la variable PATH:"
-                    echo path
-                    
-                    // Puedes agregar condiciones o comprobar valores específicos en la variable PATH aquí
-                    // Por ejemplo, verificar si una ruta específica está presente
-                    if (path.contains('/Users/aitormartin-romogonzalez/opt/anaconda3/bin')) {
-                        echo "La ruta /Users/aitormartin-romogonzalez/opt/anaconda3/bin está presente en PATH."
+                    // Obtener la ruta al directorio de trabajo (workspace)
+                    def workspaceDir = env.WORKSPACE
+
+                    // Definir la ruta completa al Dockerfile en el workspace
+                    def rutaDockerfile = "${workspaceDir}/Dockerfile"
+
+                    // Verificar si el Dockerfile existe en el workspace
+                    if (fileExists(rutaDockerfile)) {
+                        echo "El Dockerfile existe en la ruta: ${rutaDockerfile}"
+                        
+                        // Realizar acciones adicionales con el Dockerfile si es necesario
                     } else {
-                        error "La ruta /Users/aitormartin-romogonzalez/opt/anaconda3/bin no está presente en PATH."
+                        echo "El Dockerfile no se encontró en la ruta: ${rutaDockerfile}"
                     }
                 }
             }
