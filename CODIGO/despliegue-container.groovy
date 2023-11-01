@@ -6,7 +6,7 @@ pipeline {
             steps {
                 script {
                     // Construir la imagen Docker
-                    docker.build('mi_imagen_mlflow:latest', '-f Dockerfile .')
+                    docker.build('mi_imagen_mlflow:latest', '-f Dockerfile /Users/aitormartin-romogonzalez/Documents/GitHub/AAA-TFM/CODIGO/')
                 }
             }
         }
