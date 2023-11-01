@@ -10,11 +10,8 @@ pipeline {
 
                     // Definir el nombre del archivo que deseas acceder
                     def archivo = "${workspaceDir}/CODIGO/Dockerfile"
-
-                    // Construir la ruta completa al archivo en el workspace
-                    def rutaCompleta = "${workspaceDir}/${archivo}"
-
-                    sh "cat ${rutaDockerfile}"
+                    
+                    sh "cat ${archivo}"
                 }
             }
         }
