@@ -14,10 +14,10 @@ pipeline {
                     
                     // Puedes agregar condiciones o comprobar valores específicos en la variable PATH aquí
                     // Por ejemplo, verificar si una ruta específica está presente
-                    if (path.contains('/ruta/especifica')) {
-                        echo "La ruta /ruta/especifica está presente en PATH."
+                    if (path.contains('/Users/aitormartin-romogonzalez/opt/anaconda3/bin')) {
+                        echo "La ruta /Users/aitormartin-romogonzalez/opt/anaconda3/bin está presente en PATH."
                     } else {
-                        error "La ruta /ruta/especifica no está presente en PATH."
+                        error "La ruta /Users/aitormartin-romogonzalez/opt/anaconda3/bin no está presente en PATH."
                     }
                 }
             }
