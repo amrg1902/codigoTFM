@@ -15,7 +15,7 @@ pipeline {
                     echo "Contenido del archivo ${archivo}:"
                     
                     // Utilizar 'echo' para mostrar el contenido del archivo
-                    sh "echo \"$(cat ${archivo})\""
+                    sh "echo \"\$(cat ${archivo})\""
                 }
             }
         }
