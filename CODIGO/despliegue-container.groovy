@@ -22,5 +22,15 @@ pipeline {
                 }
             }
         }
+        stage('Construir imagen Docker') {
+            steps {
+                script {
+                    def dockerfilePath = "${workspaceDir}/Dockerfile"
+                    def dockerImageName = "mi_imagen_docker:latest"
+                    sh "docker build -t ${dockerImageName} -f ${dockerfilePath} ."
+        }
+    }
+}
+
     }
 }
