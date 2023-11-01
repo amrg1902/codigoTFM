@@ -10,8 +10,12 @@ pipeline {
 
                     // Definir el nombre del archivo que deseas acceder
                     def archivo = "${workspaceDir}/CODIGO/Dockerfile"
+
+                    // Mostrar un mensaje en el registro de Jenkins
+                    echo "Contenido del archivo ${archivo}:"
                     
-                    sh "cat ${archivo}"
+                    // Utilizar 'echo' para mostrar el contenido del archivo
+                    sh "echo \"$(cat ${archivo})\""
                 }
             }
         }
