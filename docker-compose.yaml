@@ -7,10 +7,10 @@ services:
     ports:
       - "5005:5005"  # Mapeo del puerto para acceder al modelo MLflow
     volumes:
-      - ./mlruns:/mlruns  # Montar el directorio mlruns
+#      - ./mlruns:/mlruns  # Montar el directorio mlruns
 
   training-container:
     build:
       context: ./training-container  # Ruta al directorio que contiene el Dockerfile del entrenamiento
     volumes:
-      - ./data:/app/data  # Montar el directorio de datos necesario para el entrenamiento
+#      - ./data:/app/data  # Montar el directorio de datos necesario para el entrenamiento
