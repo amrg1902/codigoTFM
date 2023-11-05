@@ -19,7 +19,7 @@ RUN mkdir -p /mlflow/artifacts
 RUN mkdir -p /mlflow
 
 # Copia el modelo registrado en la imagen del contenedor
-COPY ./mlruns /mlruns
+COPY ./mlflow-container/mlruns /mlruns
 
 # Define el comando para iniciar el servidor de MLflow
 CMD mlflow server --host 0.0.0.0 --port 5005 --backend-store-uri sqlite:////mlflow/mlflow.db --default-artifact-root /mlflow/artifacts
