@@ -31,15 +31,15 @@ pipeline {
                 }
             }
         }
-        stage('Construir imagen Docker mlflow') {
-            steps {
-                script {
-                    def dockerfilePath = "${workspaceDir}/mlflow-container/Dockerfile"
-                    def dockerImageName = "mlflow_image:latest"
-                    sh "docker build -t ${dockerImageName} -f ${dockerfilePath} ."
-                }
-            }
-        }
+        // stage('Construir imagen Docker mlflow') {
+        //     steps {
+        //         script {
+        //             def dockerfilePath = "${workspaceDir}/mlflow-container/Dockerfile"
+        //             def dockerImageName = "mlflow_image:latest"
+        //             sh "docker build -t ${dockerImageName} -f ${dockerfilePath} ."
+        //         }
+        //     }
+        // }
         // stage('Desplegar contenedor') {
         //     steps {
         //         script {
