@@ -12,8 +12,8 @@ RUN mkdir -p /mlflow/artifacts
 RUN mkdir -p /mlflow
 
 # Copia tu código de entrenamiento y los datos necesarios al contenedor
-COPY ./modelo.py /app/train_model.py
-COPY ./data/ /app/data/
+COPY ./training-container/modelo.py /app/train_model.py
+COPY ./training-container/data/ /app/data/
 
 
 # Ejecuta el código de entrenamiento
