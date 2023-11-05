@@ -32,7 +32,7 @@ FROM python:3.8
 RUN pip install scikit-learn numpy pandas  # Agrega las bibliotecas necesarias
 
 # Copia tu código de entrenamiento y los datos necesarios al contenedor
-COPY ./train_model.py /app/train_model.py
+COPY ./modelo.py /app/train_model.py
 COPY ./data/ /app/data/
 
 # Establece el directorio de trabajo
