@@ -26,7 +26,7 @@ pipeline {
             steps {
                 script {
                     def dockerfilePath = "${workspaceDir}/training-container/Dockerfile"
-                    def dockerImageName = "mi_imagen_docker:latest"
+                    def dockerImageName = "training_image:latest"
                     sh "docker build -t ${dockerImageName} -f ${dockerfilePath} ."
                 }
             }
@@ -35,7 +35,7 @@ pipeline {
             steps {
                 script {
                     def dockerfilePath = "${workspaceDir}/mlflow-container/Dockerfile"
-                    def dockerImageName = "mi_imagen_docker:latest"
+                    def dockerImageName = "mlflow_image:latest"
                     sh "docker build -t ${dockerImageName} -f ${dockerfilePath} ."
                 }
             }
