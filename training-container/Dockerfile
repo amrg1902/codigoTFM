@@ -9,12 +9,10 @@ WORKDIR /app
 
 # Crea un directorio para almacenar el modelo y los datos
 RUN mkdir -p /mlflow/artifacts
-RUN mkdir -p /mlflow
 
-# Copia tu código de entrenamiento y los datos necesarios al contenedor
+# Copia el código de entrenamiento y los datos necesarios al contenedor
 COPY ./training-container/modelo.py /app/train_model.py
 COPY ./training-container/data/ /app/data/
-
 
 # Ejecuta el código de entrenamiento
 CMD ["python", "train_model.py"]

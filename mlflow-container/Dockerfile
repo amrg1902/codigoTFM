@@ -18,8 +18,8 @@ ENV MLFLOW_SERVER_DEFAULT_DATABASE_URI sqlite:////mlflow/mlflow.db
 RUN mkdir -p /mlflow/artifacts
 RUN mkdir -p /mlflow
 
-# Copia el modelo registrado en la imagen del contenedor
-COPY ./mlruns/ /app/mlruns
+# # Copia el modelo registrado en la imagen del contenedor  CREO QUE TENGO QUE COPIAR ESTO DESDE EL CONTENEDOR DEL TRAINING AL CONTENEDOR DEL MLFLOW
+# COPY ./mlruns/ /app/mlruns
 
 # Define el comando para iniciar el servidor de MLflow
 CMD mlflow server --host 0.0.0.0 --port 5005 --backend-store-uri sqlite:////mlflow/mlflow.db --default-artifact-root /mlflow/artifacts
