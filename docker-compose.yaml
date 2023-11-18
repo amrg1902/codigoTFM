@@ -1,16 +1,24 @@
 version: '3'
 
 services:
-  mlflow-container:
+  mlflow_postgres:
     build:
-      context: ./mlflow-container  # Ruta al directorio que contiene el Dockerfile del modelo MLflow
-    ports:
-      - "5005:5005"  # Mapeo del puerto para acceder al modelo MLflow
-    volumes:
-      - ./mlruns:/mlruns  # Montar el directorio mlruns
+      context: .
+      dockerfile: mlflow-db/Dockerfile
+    container_name: mlflow_postgres
+    networks:
+      - mlflow_network
 
-  training-container:
+  mlflow_container:
     build:
-      context: ./training-container  # Ruta al directorio que contiene el Dockerfile del entrenamiento
-    volumes:
-      - ./data:/app/data  # Montar el directorio de datos necesario para el entrenamiento
+      context: .
+      dockerfile: mlflow-container/Dockerfile
+    container_name: mlflow_container
+    networks:
+      - mlflow_network
+    ports:
+      - "80:80"
+
+networks:
+  mlflow_network:
+    driver: bridge

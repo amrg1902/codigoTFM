@@ -61,6 +61,15 @@ pipeline {
                 }
             }
         }
+        stage('Docker Compose') {
+            steps {
+                script {
+                    // Ejecuta el docker-compose
+                    sh "docker-compose -f docker-compose.yml up -d"
+                }
+            }
+        }
+
 
         // stage('Construir imagen Docker model tree classifier') {
         //     steps {
