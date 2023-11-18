@@ -4,6 +4,7 @@ FROM python:3.9
 # Instala MLflow y otras dependencias
 RUN ["pip", "install", "--upgrade", "pip"]
 RUN pip install --no-cache-dir mlflow
+#Para poder levantar el contenedor y que tenga docker dentro es necesario instalarlo en el contenedor.
 RUN apt-get update && \
     apt-get install -y docker.io
 
