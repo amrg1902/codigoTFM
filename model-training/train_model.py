@@ -9,7 +9,7 @@ from sklearn.metrics import accuracy_score
 
 # Configura la URI de la base de datos y la dirección del servidor de MLflow
 mlflow.set_tracking_uri("http://mlflow_container:80")
-mlflow.set_experiment('default')
+mlflow.set_experiment('Entrenamiento prueba data iris')
 
 # Carga los datos de iris
 iris = load_iris()
