@@ -24,6 +24,9 @@
 # Utiliza una imagen base de Python con MLflow preinstalado
 FROM python:3.9
 
+#Actualizar pip
+RUN pip install --upgrade pip
+
 # Instala MLflow y el exportador de Prometheus
 RUN pip install mlflow mlflow-prometheus-exporter
 
