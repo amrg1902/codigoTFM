@@ -37,7 +37,7 @@ pipeline {
                     sh "docker build -t ${dockerImageName} -f ${dockerfilePath} ."
 
                     // Levantar el nuevo contenedor
-                    sh "docker run --network mlflow_network --name ${dockerContainerName} -d ${dockerImageName}"
+                    sh "docker run --name ${dockerContainerName} -d ${dockerImageName}"
                 }
             }
         }
@@ -57,7 +57,7 @@ pipeline {
                     sh "docker build -t ${dockerImageName} -f ${dockerfilePath} ."
 
                     // Levantar el nuevo contenedor
-                    sh "docker run --network mlflow_network -p 80:80  --name ${dockerContainerName} -d ${dockerImageName}"
+                    sh "docker run -p 80:80  --name ${dockerContainerName} -d ${dockerImageName}"
                 }
             }
         }
