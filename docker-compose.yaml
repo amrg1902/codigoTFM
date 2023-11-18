@@ -29,7 +29,7 @@ services:
     depends_on:
       - mlflow_postgres
       - mlflow_container
-      
+
   prometheus:
     image: prom/prometheus:latest
     container_name: prometheus
@@ -45,6 +45,9 @@ services:
     container_name: grafana
     ports:
       - "3000:3000"
+    volumes:
+      - ./grafana/grafana.ini:/etc/grafana/grafana.ini
+      - ./grafana/provisioning:/etc/grafana/provisioning
     environment:
       - GF_SECURITY_ADMIN_PASSWORD=admin
     depends_on:
