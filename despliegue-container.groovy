@@ -56,7 +56,7 @@ pipeline {
                     sh "docker build -t ${dockerImageName} -f ${dockerfilePath} ."
 
                     // Levantar el nuevo contenedor
-                    sh "docker run -p 5000:5000 --name ${dockerContainerName} -d ${dockerImageName}"
+                    sh "docker run -p 5001:5001 --name ${dockerContainerName} -d ${dockerImageName}"
                 }
             }
         }
