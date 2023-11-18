@@ -27,7 +27,7 @@ pipeline {
                 script {
                     def dockerfilePath = "${workspaceDir}/mlflow-db/Dockerfile"
                     def dockerImageName = "postgresql:latest"
-                    def dockerContainerName = "postgresql_container"
+                    def dockerContainerName = "mlflow_postgres"
 
                     // Detener y eliminar el contenedor si ya existe
                     sh "docker stop ${dockerContainerName} || true"
@@ -37,10 +37,11 @@ pipeline {
                     sh "docker build -t ${dockerImageName} -f ${dockerfilePath} ."
 
                     // Levantar el nuevo contenedor
-                    sh "docker run --name ${dockerContainerName} -d ${dockerImageName}"
+                    sh "docker run --network mlflow_network --name ${dockerContainerName} -d ${dockerImageName}"
                 }
             }
         }
+
         stage('Construir contenedor Docker mlflow') {
             steps {
                 script {
@@ -56,7 +57,7 @@ pipeline {
                     sh "docker build -t ${dockerImageName} -f ${dockerfilePath} ."
 
                     // Levantar el nuevo contenedor
-                    sh "docker run -p 80:80 --network="host" --name ${dockerContainerName} -d ${dockerImageName}"
+                    sh "docker run --network mlflow_network -p 80:80  --name ${dockerContainerName} -d ${dockerImageName}"
                 }
             }
         }
