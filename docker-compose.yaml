@@ -19,6 +19,14 @@ services:
     ports:
       - "80:80"
 
+  model_training_container:
+    build:
+      context: .
+      dockerfile: model-training/Dockerfile
+    container_name: model_training_container
+    networks:
+      - mlflow_network
+
 networks:
   mlflow_network:
     driver: bridge

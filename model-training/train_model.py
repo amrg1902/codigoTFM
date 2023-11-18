@@ -6,6 +6,10 @@ from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score
 
+# Configura la URI de la base de datos y la dirección del servidor de MLflow
+mlflow.set_tracking_uri(os.environ['MLFLOW_SERVER_URI'])
+mlflow.set_experiment('default')
+
 # Carga los datos de iris
 iris = load_iris()
 X_train, X_test, y_train, y_test = train_test_split(iris.data, iris.target, test_size=0.2, random_state=42)
