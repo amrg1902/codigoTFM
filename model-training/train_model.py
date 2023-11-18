@@ -38,6 +38,13 @@ from sklearn.datasets import load_breast_cancer
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score
+from prometheus_client import start_http_server, Gauge
+
+# Inicia el servidor de métricas de Prometheus en el puerto 8000
+start_http_server(8000)
+
+# Define una métrica de gauge para Prometheus
+accuracy_gauge = Gauge('mlflow_accuracy', 'Accuracy metric from MLflow')
 
 
 # Carga el conjunto de datos Breast Cancer Wisconsin
@@ -64,8 +71,8 @@ with mlflow.start_run():
     # Log de parámetros y métricas en MLflow
     mlflow.log_param("n_estimators", 100)
     mlflow.log_metric("accuracy", accuracy)
-    
     # Log del modelo en MLflow
     mlflow.sklearn.log_model(model, "model")
-
+    # Exporta la métrica de accuracy a Prometheus
+    accuracy_gauge.set(accuracy)
 
