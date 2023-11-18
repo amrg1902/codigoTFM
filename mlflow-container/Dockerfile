@@ -19,5 +19,5 @@ ENV MLFLOW_SERVER_DEFAULT_DATABASE_URI sqlite:////mlflow/mlflow.db
 # COPY ./mlruns/ /app/mlruns
 
 # Define el comando para iniciar el servidor de MLflow
-CMD mlflow server --host 0.0.0.0 --port 5005 --backend-store-uri sqlite:////mlflow/mlflow.db --default-artifact-root /mlflow/artifacts
-# CMD ["mlflow", "models", "serve", "-m", "runs:/<RUN_ID>/modelo", "--host", "0.0.0.0", "--port", "5005"]
+#CMD mlflow server --host 0.0.0.0 --port 5005 --backend-store-uri sqlite:////mlflow/mlflow.db --default-artifact-root /mlflow/artifacts
+CMD ["mlflow", "models", "serve", "-m", "runs:/<RUN_ID>/modelo", "--host", "0.0.0.0", "--port", "5005"]

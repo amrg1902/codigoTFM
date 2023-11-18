@@ -31,32 +31,27 @@ pipeline {
                 }
             }
         }
-        
-        stage('Construir imagen Docker training') {
+
+        stage('Levantar contenedor Docker mlflow') {
             steps {
                 script {
-                    def dockerfilePath = "${workspaceDir}/training-container/Dockerfile"
-                    def dockerImageName = "training_image:latest"
-                    sh "docker build -t ${dockerImageName} -f ${dockerfilePath} ."
+                    def dockerContainerName = "mlflow_container"
+                    sh "docker run --name ${dockerContainerName} -d ${dockerImageName}"
                 }
             }
         }
 
-        // stage('Desplegar docker-compose') {
+
+        // stage('Construir imagen Docker model tree classifier') {
         //     steps {
         //         script {
-        //             def dockerImageName = "mi_imagen_docker:latest"
-        //             def containerName = "mi_contenedor"
-
-        //             // Detener y eliminar el contenedor si ya existe (opcional)
-        //             sh "docker stop ${containerName} || true"
-        //             sh "docker rm ${containerName} || true"
-
-        //             // Ejecutar el contenedor a partir de la imagen
-        //             sh "docker run -d -p 5005:5005 --name ${containerName} ${dockerImageName}"
+        //             def dockerfilePath = "${workspaceDir}/model-tree-classifier/Dockerfile"
+        //             def dockerImageName = "training_image:latest"
+        //             sh "docker build -t ${dockerImageName} -f ${dockerfilePath} ."
         //         }
         //     }
         // }
+
 
 
     }
