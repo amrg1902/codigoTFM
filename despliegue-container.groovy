@@ -28,13 +28,20 @@ pipeline {
                     def dockerfilePath = "${workspaceDir}/mlflow-container/Dockerfile"
                     def dockerImageName = "mlflow_image:latest"
                     def dockerContainerName = "mlflow_container"
-                    //Creo imagen
+
+                    // Detener y eliminar el contenedor si ya existe
+                    sh "docker stop ${dockerContainerName} || true"
+                    sh "docker rm ${dockerContainerName} || true"
+
+                    // Crear la imagen
                     sh "docker build -t ${dockerImageName} -f ${dockerfilePath} ."
-                    //Levanto contenedor
+
+                    // Levantar el nuevo contenedor
                     sh "docker run --name ${dockerContainerName} -d ${dockerImageName}"
-                }
-            }
         }
+    }
+}
+
 
         // stage('Construir imagen Docker model tree classifier') {
         //     steps {
