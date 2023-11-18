@@ -71,15 +71,15 @@ pipeline {
         }
 
 
-        // stage('Construir imagen Docker model tree classifier') {
-        //     steps {
-        //         script {
-        //             def dockerfilePath = "${workspaceDir}/model-tree-classifier/Dockerfile"
-        //             def dockerImageName = "training_image:latest"
-        //             sh "docker build -t ${dockerImageName} -f ${dockerfilePath} ."
-        //         }
-        //     }
-        // }
+        stage('Construir imagen Docker model tree classifier') {
+            steps {
+                script {
+                    def dockerfilePath = "${workspaceDir}/model-tree-classifier/Dockerfile"
+                    def dockerImageName = "training_image:latest"
+                    sh "docker build -t ${dockerImageName} -f ${dockerfilePath} ."
+                }
+            }
+        }
 
 
 
