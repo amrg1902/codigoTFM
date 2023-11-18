@@ -2,7 +2,7 @@
 FROM python:3.9
 
 # Instala las dependencias
-RUN pip install mlflow scikit-learn
+RUN pip install mlflow scikit-learn os
 
 # Copia el script de entrenamiento al contenedor
 COPY ./model-training/train_model.py /app/train_model.py
