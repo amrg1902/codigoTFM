@@ -38,6 +38,8 @@ from sklearn.datasets import load_breast_cancer
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score
+from prometheus_client import start_http_server, Counter
+
 
 # Carga el conjunto de datos Breast Cancer Wisconsin
 data = load_breast_cancer()
