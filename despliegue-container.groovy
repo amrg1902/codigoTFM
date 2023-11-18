@@ -22,45 +22,19 @@ pipeline {
                 }
             }
         }
-        // stage('Construir contenedor Docker postgreSQL') {
-        //     steps {
-        //         script {
-        //             def dockerfilePath = "${workspaceDir}/mlflow-db/Dockerfile"
-        //             def dockerImageName = "postgresql:latest"
-        //             def dockerContainerName = "mlflow_postgres"
+        stage('Eliminar imagenes y contenedores previos en Docker') {
+            steps {
+                script {
+                    // Detener y eliminar todos los contenedores
+                    sh "docker stop \$(docker ps -a -q) || true"
+                    sh "docker rm \$(docker ps -a -q) || true"
 
-        //             // Detener y eliminar el contenedor si ya existe
-        //             sh "docker stop ${dockerContainerName} || true"
-        //             sh "docker rm ${dockerContainerName} || true"
+                    // Eliminar todas las imágenes
+                    sh "docker rmi \$(docker images -q) || true"
+                }
+            }
+        }
 
-        //             // Crear la imagen
-        //             sh "docker build -t ${dockerImageName} -f ${dockerfilePath} ."
-
-        //             // Levantar el nuevo contenedor
-        //             sh "docker run --name ${dockerContainerName} -d ${dockerImageName}"
-        //         }
-        //     }
-        // }
-
-        // stage('Construir contenedor Docker mlflow') {
-        //     steps {
-        //         script {
-        //             def dockerfilePath = "${workspaceDir}/mlflow-container/Dockerfile"
-        //             def dockerImageName = "mlflow_image:latest"
-        //             def dockerContainerName = "mlflow_container"
-
-        //             // Detener y eliminar el contenedor si ya existe
-        //             sh "docker stop ${dockerContainerName} || true"
-        //             sh "docker rm ${dockerContainerName} || true"
-
-        //             // Crear la imagen
-        //             sh "docker build -t ${dockerImageName} -f ${dockerfilePath} ."
-
-        //             // Levantar el nuevo contenedor
-        //             sh "docker run -p 80:80  --name ${dockerContainerName} -d ${dockerImageName}"
-        //         }
-        //     }
-        // }
         stage('Docker Compose') {
             steps {
                 script {
@@ -69,27 +43,6 @@ pipeline {
                 }
             }
         }
-
-
-        // stage('Entrenar modelo') {
-        //     steps {
-        //         script {
-        //             def dockerfilePath = "${workspaceDir}/model-training/Dockerfile"
-        //             def dockerImageName = "model_training_image:latest"
-        //             def dockerContainerName = "model_training_container"
-
-        //             // Detener y eliminar el contenedor si ya existe
-        //             sh "docker stop ${dockerContainerName} || true"
-        //             sh "docker rm ${dockerContainerName} || true"
-
-        //             // Construir la imagen
-        //             sh "docker build -t ${dockerImageName} -f ${dockerfilePath} ${workspaceDir}"
-
-        //             // Ejecutar el contenedor para entrenar el modelo
-        //             sh "docker run --name ${dockerContainerName} ${dockerImageName}"
-        //         }
-        //     }
-        // } 
 
     }
 }
