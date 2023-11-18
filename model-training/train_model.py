@@ -8,7 +8,7 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score
 
 # Configura la URI de la base de datos y la dirección del servidor de MLflow
-mlflow.set_tracking_uri(os.environ['MLFLOW_SERVER_URI'])
+mlflow.set_tracking_uri("http://mlflow_container:80")
 mlflow.set_experiment('default')
 
 # Carga los datos de iris
