@@ -32,13 +32,10 @@ from sklearn.metrics import accuracy_score
 #     mlflow.sklearn.log_model(model, "model")
 
 
-import boto3 # required in case we store the artifacts on s3
 import category_encoders as ce
 import pandas as pd # data processing, CSV file I/O (e.g. pd.read_csv)
 import matplotlib.pyplot as plt # data visualization
 import mlflow
-import os
-import warnings
 
 from sklearn import tree
 from sklearn.metrics import accuracy_score, classification_report, confusion_matrix, ConfusionMatrixDisplay
