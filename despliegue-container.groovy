@@ -71,17 +71,25 @@ pipeline {
         }
 
 
-        stage('Construir imagen Docker model tree classifier') {
+        stage('Entrenar modelo') {
             steps {
                 script {
-                    def dockerfilePath = "${workspaceDir}/model-tree-classifier/Dockerfile"
-                    def dockerImageName = "training_image:latest"
-                    sh "docker build -t ${dockerImageName} -f ${dockerfilePath} ."
+                    def dockerfilePath = "${workspaceDir}/model-training/Dockerfile"
+                    def dockerImageName = "model_training_image:latest"
+                    def dockerContainerName = "model_training_container"
+
+                    // Detener y eliminar el contenedor si ya existe
+                    sh "docker stop ${dockerContainerName} || true"
+                    sh "docker rm ${dockerContainerName} || true"
+
+                    // Construir la imagen
+                    sh "docker build -t ${dockerImageName} -f ${dockerfilePath} ${workspaceDir}"
+
+                    // Ejecutar el contenedor para entrenar el modelo
+                    sh "docker run --name ${dockerContainerName} ${dockerImageName}"
                 }
             }
-        }
-
-
+        } 
 
     }
 }
