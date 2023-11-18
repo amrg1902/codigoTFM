@@ -22,15 +22,6 @@ pipeline {
                 }
             }
         }
-        stage('Construir imagen Docker training') {
-            steps {
-                script {
-                    def dockerfilePath = "${workspaceDir}/training-container/Dockerfile"
-                    def dockerImageName = "training_image:latest"
-                    sh "docker build -t ${dockerImageName} -f ${dockerfilePath} ."
-                }
-            }
-        }
         stage('Construir imagen Docker mlflow') {
             steps {
                 script {
@@ -40,7 +31,18 @@ pipeline {
                 }
             }
         }
-        // stage('Desplegar contenedor') {
+        
+        stage('Construir imagen Docker training') {
+            steps {
+                script {
+                    def dockerfilePath = "${workspaceDir}/training-container/Dockerfile"
+                    def dockerImageName = "training_image:latest"
+                    sh "docker build -t ${dockerImageName} -f ${dockerfilePath} ."
+                }
+            }
+        }
+
+        // stage('Desplegar docker-compose') {
         //     steps {
         //         script {
         //             def dockerImageName = "mi_imagen_docker:latest"
