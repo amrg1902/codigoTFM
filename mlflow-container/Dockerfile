@@ -8,4 +8,4 @@ RUN pip install mlflow
 EXPOSE 5000
 
 # Establece el comando por defecto al iniciar el contenedor
-CMD ["mlflow", "ui", "--host", "0.0.0.0", "--port", "5001"]
+CMD ["mlflow", "ui", "--host", "0.0.0.0", "--port", "80"]
