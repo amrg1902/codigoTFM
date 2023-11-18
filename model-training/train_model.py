@@ -44,16 +44,7 @@ from sklearn import tree
 from sklearn.metrics import accuracy_score, classification_report, confusion_matrix, ConfusionMatrixDisplay
 from sklearn.model_selection import train_test_split
 from sklearn.tree import DecisionTreeClassifier
-# -
 
-warnings.filterwarnings('ignore')
-# %matplotlib inline
-
-# ## Get MLFlow server URI
-
-registry_uri = os.getenv('REGISTRY_URI')
-if not registry_uri:
-    raise Exception('REGISTRY_URI env variable should be defined on the system in order to log the generated model')
 
 # ## Import dataset
 
@@ -163,33 +154,6 @@ print('Model accuracy score with criterion entropy: {0:0.4f}'. format(accuracy_s
 plt.figure(figsize=(12,8))
 tree.plot_tree(clf_en.fit(X_train, y_train))
 
-# + [markdown] tags=[]
-# ## Confusion matrix
-#
-#
-# A confusion matrix is a tool for summarizing the performance of a classification algorithm. A confusion matrix will give us a clear picture of classification model performance and the types of errors produced by the model. It gives us a summary of correct and incorrect predictions broken down by each category. The summary is represented in a tabular form.
-#
-#
-# Four types of outcomes are possible while evaluating a classification model performance. These four outcomes are described below:-
-#
-#
-# **True Positives (TP)** – True Positives occur when we predict an observation belongs to a certain class and the observation actually belongs to that class.
-#
-#
-# **True Negatives (TN)** – True Negatives occur when we predict an observation does not belong to a certain class and the observation actually does not belong to that class.
-#
-#
-# **False Positives (FP)** – False Positives occur when we predict an observation belongs to a    certain class but the observation actually does not belong to that class. This type of error is called **Type I error.**
-#
-#
-#
-# **False Negatives (FN)** – False Negatives occur when we predict an observation does not belong to a certain class but the observation actually belongs to that class. This is a very serious error and it is called **Type II error.**
-#
-#
-#
-# These four outcomes are summarized in a confusion matrix given below.
-#
-# -
 
 # print the Confusion Matrix and slice it into four pieces
 cm = confusion_matrix(y_test, y_pred_en)
@@ -207,23 +171,3 @@ disp.plot()
 
 print(classification_report(y_test, y_pred_en))
 
-# ## References
-#
-# The work done in this project is inspired from following books and websites:-
-#
-# 1. Hands on Machine Learning with Scikit-Learn and Tensorflow by Aurélién Géron
-#
-# 2. Introduction to Machine Learning with Python by Andreas C. Müller and Sarah Guido
-#
-# 3. https://en.wikipedia.org/wiki/Decision_tree
-#
-# 4. https://en.wikipedia.org/wiki/Information_gain_in_decision_trees
-#
-# 5. https://en.wikipedia.org/wiki/Entropy_(information_theory)
-#
-# 6. https://www.datacamp.com/community/tutorials/decision-tree-classification-python
-#
-# 7. https://stackabuse.com/decision-trees-in-python-with-scikit-learn/
-#
-# 8. https://acadgild.com/blog/decision-tree-python-code
-#
