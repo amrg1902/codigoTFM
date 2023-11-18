@@ -26,8 +26,8 @@ pipeline {
             steps {
                 script {
                     def dockerfilePath = "${workspaceDir}/mlflow-db/Dockerfile"
-                    def dockerImageName = "postgreSQL:latest"
-                    def dockerContainerName = "postgreSQL_container"
+                    def dockerImageName = "postgresql:latest"
+                    def dockerContainerName = "postgresql_container"
 
                     // Detener y eliminar el contenedor si ya existe
                     sh "docker stop ${dockerContainerName} || true"
