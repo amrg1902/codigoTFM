@@ -38,9 +38,9 @@ warnings.filterwarnings('ignore')
 
 # ## Get MLFlow server URI
 
-registry_uri = os.getenv('REGISTRY_URI')
-if not registry_uri:
-    raise Exception('REGISTRY_URI env variable should be defined on the system in order to log the generated model')
+# registry_uri = os.getenv('REGISTRY_URI')
+# if not registry_uri:
+#     raise Exception('REGISTRY_URI env variable should be defined on the system in order to log the generated model')
 
 # ## Import dataset
 
@@ -157,7 +157,7 @@ plt.savefig("tree.jpg")
 
 # +
 # register the classifier
-mlflow.set_tracking_uri(registry_uri)
+mlflow.set_tracking_uri("http://localhost:80/")
 mlflow.set_experiment('TreeClassifier')
 
 with mlflow.start_run(run_name='blade_runner'):
