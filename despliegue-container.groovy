@@ -22,31 +22,12 @@ pipeline {
                 }
             }
         }
-        stage('Construir contenedor Docker postgreSQL') {
-            steps {
-                script {
-                    def dockerfilePath = "${workspaceDir}/mlflow-db/Dockerfile"
-                    def dockerImageName = "postgresql:latest"
-                    def dockerContainerName = "postgresql_container"
-
-                    // Detener y eliminar el contenedor si ya existe
-                    sh "docker stop ${dockerContainerName} || true"
-                    sh "docker rm ${dockerContainerName} || true"
-
-                    // Crear la imagen
-                    sh "docker build -t ${dockerImageName} -f ${dockerfilePath} ."
-
-                    // Levantar el nuevo contenedor
-                    sh "docker run --name ${dockerContainerName} -d ${dockerImageName}"
-                }
-            }
-        }
-        // stage('Construir contenedor Docker mlflow') {
+        // stage('Construir contenedor Docker postgreSQL') {
         //     steps {
         //         script {
-        //             def dockerfilePath = "${workspaceDir}/mlflow-container/Dockerfile"
-        //             def dockerImageName = "mlflow_image:latest"
-        //             def dockerContainerName = "mlflow_container"
+        //             def dockerfilePath = "${workspaceDir}/mlflow-db/Dockerfile"
+        //             def dockerImageName = "postgresql:latest"
+        //             def dockerContainerName = "postgresql_container"
 
         //             // Detener y eliminar el contenedor si ya existe
         //             sh "docker stop ${dockerContainerName} || true"
@@ -60,6 +41,25 @@ pipeline {
         //         }
         //     }
         // }
+        stage('Construir contenedor Docker mlflow') {
+            steps {
+                script {
+                    def dockerfilePath = "${workspaceDir}/mlflow-container/Dockerfile"
+                    def dockerImageName = "mlflow_image:latest"
+                    def dockerContainerName = "mlflow_container"
+
+                    // Detener y eliminar el contenedor si ya existe
+                    sh "docker stop ${dockerContainerName} || true"
+                    sh "docker rm ${dockerContainerName} || true"
+
+                    // Crear la imagen
+                    sh "docker build -t ${dockerImageName} -f ${dockerfilePath} ."
+
+                    // Levantar el nuevo contenedor
+                    sh "docker run -p 5000:5000 --name ${dockerContainerName} -d ${dockerImageName}"
+                }
+            }
+        }
 
         // stage('Construir imagen Docker model tree classifier') {
         //     steps {
