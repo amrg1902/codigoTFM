@@ -19,7 +19,7 @@ ENV MLFLOW_SERVER_DEFAULT_DATABASE_URI sqlite:////mlflow/mlflow.db
 # COPY ./mlruns/ /app/mlruns
 
 # Copia el script de inicio al contenedor
-COPY start_mlflow_server.sh /app/start_mlflow_server.sh
+COPY ./start_mlflow_server.sh /app/start_mlflow_server.sh
 
 # Concede permisos de ejecución al script
 RUN chmod +x /app/start_mlflow_server.sh
