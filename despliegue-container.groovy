@@ -22,7 +22,7 @@ pipeline {
                 }
             }
         }
-        stage('Construir imagen Docker mlflow') {
+        stage('Construir contenedor Docker mlflow') {
             steps {
                 script {
                     def dockerfilePath = "${workspaceDir}/mlflow-container/Dockerfile"
