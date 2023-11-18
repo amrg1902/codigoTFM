@@ -28,7 +28,8 @@ FROM python:3.9
 RUN pip install --upgrade pip
 
 # Instala MLflow y el exportador de Prometheus
-RUN pip install mlflow mlflow-prometheus-exporter
+RUN pip install mlflow 
+#mlflow-prometheus-exporter
 
 # Actualiza
 RUN apt-get update && \
