@@ -27,20 +27,14 @@ pipeline {
                 script {
                     def dockerfilePath = "${workspaceDir}/mlflow-container/Dockerfile"
                     def dockerImageName = "mlflow_image:latest"
-                    sh "docker build -t ${dockerImageName} -f ${dockerfilePath} ."
-                }
-            }
-        }
-
-        stage('Levantar contenedor Docker mlflow') {
-            steps {
-                script {
                     def dockerContainerName = "mlflow_container"
+                    //Creo imagen
+                    sh "docker build -t ${dockerImageName} -f ${dockerfilePath} ."
+                    //Levanto contenedor
                     sh "docker run --name ${dockerContainerName} -d ${dockerImageName}"
                 }
             }
         }
-
 
         // stage('Construir imagen Docker model tree classifier') {
         //     steps {
