@@ -34,17 +34,10 @@
 # Importa las bibliotecas necesarias
 import mlflow
 import mlflow.sklearn
-from mlflow import MlflowClient
 from sklearn.datasets import load_breast_cancer
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score
-from prometheus_client import start_http_server
-import mlflow.prometheus
-
-
-# Configura la exportación de métricas de MLflow a Prometheus
-#mlflow.prometheus.export_metrics()
 
 # Carga el conjunto de datos Breast Cancer Wisconsin
 data = load_breast_cancer()
