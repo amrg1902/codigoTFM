@@ -8,8 +8,6 @@ services:
     container_name: api
     ports:
       - 8000:8000
-    volumes:
-      - models:/mlruns
   
   mlflow_postgres:
     build:
@@ -26,8 +24,6 @@ services:
     container_name: mlflow_container
     networks:
       - mlflow_network
-    volumes:
-      - models:/mlruns
     ports:
       - "80:80"
 
@@ -40,8 +36,6 @@ services:
       - "4200:4200"
     networks:
       - mlflow_network
-    volumes:
-      - models:/mlruns
     depends_on:
       - mlflow_postgres
       - mlflow_container
