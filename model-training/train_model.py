@@ -42,8 +42,6 @@ from sklearn.metrics import accuracy_score
 from prometheus_client import start_http_server
 import mlflow.prometheus
 
-# Inicia el servidor Prometheus
-start_http_server(port=8000)
 
 # Configura la exportación de métricas de MLflow a Prometheus
 mlflow.prometheus.export_metrics()
@@ -64,8 +62,7 @@ accuracy = accuracy_score(y_test, y_pred)
 print(f'Accuracy: {accuracy}')
 
 
-#Log into MLFlow
-client = MlflowClient()
+
 # Configura la URI de seguimiento de MLflow
 mlflow.set_tracking_uri("http://mlflow_container:80")
 mlflow.set_experiment('Entrenamiento de prueba mas complejo')
