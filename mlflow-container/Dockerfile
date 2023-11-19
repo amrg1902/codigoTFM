@@ -28,7 +28,7 @@ FROM python:3.9
 RUN pip install --upgrade pip
 
 # Instala MLflow y el exportador de Prometheus
-RUN pip install mlflow psycopg2-binary prometheus-flask-exporter
+RUN pip install mlflow psycopg2-binary prometheus-flask-exporter prometheus_client
 #mlflow-prometheus-exporter
 
 # Actualiza
