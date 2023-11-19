@@ -39,6 +39,8 @@ from sklearn.datasets import load_breast_cancer
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score
+from prometheus_client import start_http_server
+import mlflow.prometheus
 
 
 # Carga el conjunto de datos Breast Cancer Wisconsin
@@ -55,6 +57,13 @@ y_pred = model.predict(X_test)
 # Calcula la precisión del modelo
 accuracy = accuracy_score(y_test, y_pred)
 print(f'Accuracy: {accuracy}')
+
+
+# Inicia el servidor Prometheus
+start_http_server(port=8000)
+
+# Configura la exportación de métricas de MLflow a Prometheus
+mlflow.prometheus.export_metrics()
 
 
 #Log into MLFlow
