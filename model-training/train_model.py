@@ -44,7 +44,7 @@ import mlflow.prometheus
 
 
 # Configura la exportación de métricas de MLflow a Prometheus
-mlflow.prometheus.export_metrics()
+#mlflow.prometheus.export_metrics()
 
 # Carga el conjunto de datos Breast Cancer Wisconsin
 data = load_breast_cancer()
