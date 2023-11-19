@@ -60,11 +60,9 @@ mlflow.set_experiment('Entrenamiento de prueba mas complejo')
 
 # Inicia un nuevo "run" de MLflow
 with mlflow.start_run():
-    # Trackeamos los metrics de manera automatica
-    mlflow.sklearn.autolog(silent=True)
     # Log de parámetros y métricas en MLflow
     mlflow.log_param("n_estimators", 100)
-    #mlflow.log_metric("accuracy", accuracy)
+    mlflow.log_metric("accuracy", accuracy)
     # Log del modelo en MLflow
     mlflow.sklearn.log_model(model, "model")
 
