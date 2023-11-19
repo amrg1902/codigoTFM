@@ -5,6 +5,7 @@ import mlflow.pyfunc
 import pandas as pd
 app = FastAPI()
 
+Instrumentator().instrument(app).expose(app)
 
 def fetch_latest_model():
     client = MlflowClient()
@@ -18,9 +19,9 @@ def fetch_latest_version(model_name):
     return model
 
 
-@app.on_event("startup")
-async def startup():
-    Instrumentator().instrument(app).expose(app)
+# @app.on_event("startup")
+# async def startup():
+#     Instrumentator().instrument(app).expose(app)
 
 
 @app.get("/predict/")
