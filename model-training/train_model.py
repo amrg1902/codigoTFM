@@ -86,4 +86,4 @@ if __name__ == '__main__':
         mlflow.sklearn.log_model(model, "model")
 
     # Ejecuta la aplicación Flask
-    app.run(host='0.0.0.0', port=5000)
+    app.run(host='0.0.0.0', port=6000)
