@@ -1,5 +1,0 @@
-mlflow
-psycopg2-binary
-prometheus-flask-exporter
-prometheus_client 
-flask
