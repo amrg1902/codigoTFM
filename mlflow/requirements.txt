@@ -1,4 +1,5 @@
 mlflow
 psycopg2-binary
 prometheus-flask-exporter
-prometheus_client flask
+prometheus_client 
+flask
