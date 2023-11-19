@@ -1,58 +1,50 @@
-version: '3'
-
+version: "3.9"
 services:
-  mlflow_postgres:
-    build:
-      context: .
-      dockerfile: mlflow-db/Dockerfile
-    container_name: mlflow_postgres
-    networks:
-      - mlflow_network
-
-  mlflow_container:
-    build:
-      context: .
-      dockerfile: mlflow-container/Dockerfile
-    container_name: mlflow_container
-    networks:
-      - mlflow_network
+  api:
+    build: api
     ports:
-      - "80:80"
+      - 8086:8086
+    volumes:
+      - models:/mlruns
 
-  model_training_container:
-    build:
-      context: .
-      dockerfile: model-training/Dockerfile
-    container_name: model_training_container
-    networks:
-      - mlflow_network
-    depends_on:
-      - mlflow_postgres
-      - mlflow_container
+  app:
+    build: app
+    ports:
+      - 8501:8501
+
+  train:
+    build: training
+    ports:
+      - 4200:4200
+    volumes:
+      - models:/mlruns
+
+  mlflow:
+    build: mlflow
+    ports:
+      - 5000:5000
+    volumes:
+      - models:/mlruns
 
   prometheus:
     image: prom/prometheus:latest
-    container_name: prometheus
     ports:
-      - "9090:9090"
+      - 9090:9090
     volumes:
-      - ./prometheus:/etc/prometheus
-    depends_on:
-      - mlflow_container
+      - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml
+    command:
+      - "--config.file=/etc/prometheus/prometheus.yml"
 
   grafana:
     image: grafana/grafana:latest
-    container_name: grafana
-    ports:
-      - "3000:3000"
-    volumes:
-      - ./grafana/grafana.ini:/etc/grafana/grafana.ini
-      - ./grafana/provisioning:/etc/grafana/provisioning
-    environment:
-      - GF_SECURITY_ADMIN_PASSWORD=admin
+    user: "472"
     depends_on:
       - prometheus
-
-networks:
-  mlflow_network:
-    driver: bridge
+    ports:
+      - 3000:3000
+    volumes:
+      - ./monitoring/datasource.yml:/etc/grafana/provisioning/datasources/datasource.yml
+      - ./monitoring/dashboard.json:/etc/grafana/provisioning/dashboards/dashboard.json
+      - ./monitoring/dashboard.yml:/etc/grafana/provisioning/dashboards/default.yml
+volumes:
+  models:
