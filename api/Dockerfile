@@ -1,7 +1,6 @@
 # Utiliza una imagen base de Python con MLflow preinstalado
 FROM python:3.9
 
-RUN mkdir /api
 WORKDIR /api
 
 COPY requirements.txt .
