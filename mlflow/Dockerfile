@@ -8,7 +8,7 @@ WORKDIR /app
 RUN pip install --upgrade pip
 
 #Instala los requisitos
-COPY requirements.txt .
+COPY ./mlflow/requirements.txt .
 RUN pip install -r requirements.txt
 
 # Actualiza

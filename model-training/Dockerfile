@@ -5,7 +5,7 @@ FROM python:3.9
 WORKDIR /app
 
 #Instala las dependencias
-COPY requirements.txt .
+COPY ./model-training/requirements.txt .
 RUN pip install -r requirements.txt
 
 # Copia el script de entrenamiento al contenedor
