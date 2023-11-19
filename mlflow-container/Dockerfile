@@ -44,4 +44,4 @@ ENV MLFLOW_EXPOSE_PROMETHEUS true
 EXPOSE 80
 
 # Establece el comando por defecto al iniciar el contenedor
-CMD ["wait-for-it", "mlflow_postgres:5432", "--", "mlflow", "ui", "--host", "0.0.0.0", "--port", "80", "--backend-store-uri", "postgresql://mlflow:mlflow@mlflow_postgres:5432/mlflow_db", "--expose-prometheus", "MLFLOW_EXPOSE_PROMETHEUS"]
+CMD ["wait-for-it", "mlflow_postgres:5432", "--", "mlflow", "ui", "--host", "0.0.0.0", "--port", "80", "--backend-store-uri", "postgresql://mlflow:mlflow@mlflow_postgres:5432/mlflow_db", "--expose-prometheus", "$MLFLOW_EXPOSE_PROMETHEUS"]
