@@ -1,0 +1,35 @@
+name: Neural network Docker build 
+on:
+  pull_request:
+    types:
+      - closed 
+    branches:
+      - main
+    paths:
+      - 'model-neural-network/neural-network.py'
+  workflow_dispatch:
+
+jobs:
+  merge_job:
+    # Runs in case the PR is merged
+    if: github.event.pull_request.merged == true
+
+    runs-on: ubuntu-latest
+
+    steps:
+    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+    - name: Checkout repo
+      uses: actions/checkout@v2
+
+    # Checks if notebook output has been cleaned
+    - uses: ResearchSoftwareActions/EnsureCleanNotebooksAction@1.1
+
+    - name: Build and push neural network Docker image
+      uses: mr-smithers-excellent/docker-build-push@v5
+      with:
+        registry: docker.io
+        image: roldanx/mlflow-nn
+        dockerfile: model-neural-network/Dockerfile
+        tags: latest
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}

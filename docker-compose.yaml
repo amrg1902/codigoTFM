@@ -1,51 +1,74 @@
-version: "3.9"
+version: '3'
+
 services:
   api:
     build: api
     ports:
-      - 8086:8086
+      - 8000:8000
     volumes:
       - models:/mlruns
+  
+  mlflow_postgres:
+    build:
+      context: .
+      dockerfile: mlflow-db/Dockerfile
+    container_name: mlflow_postgres
+    networks:
+      - mlflow_network
 
-  app:
-    build: app
-    ports:
-      - 8501:8501
-
-  train:
-    build: training
-    ports:
-      - 4200:4200
+  mlflow_container:
+    build:
+      context: .
+      dockerfile: mlflow/Dockerfile
+    container_name: mlflow_container
+    networks:
+      - mlflow_network
     volumes:
       - models:/mlruns
-
-  mlflow:
-    build: mlflow
     ports:
-      #- 5000:5000
-      - 80:80
+      - "80:80"
+
+  model_training_container:
+    build:
+      context: .
+      dockerfile: model-training/Dockerfile
+    container_name: model_training_container
+    ports:
+      - "4200:4200"
+    networks:
+      - mlflow_network
     volumes:
       - models:/mlruns
+    depends_on:
+      - mlflow_postgres
+      - mlflow_container
 
   prometheus:
     image: prom/prometheus:latest
+    container_name: prometheus
     ports:
-      - 9090:9090
+      - "9090:9090"
     volumes:
-      - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml
+      - ./monitoring/prometheus.yaml:/etc/prometheus
     command:
       - "--config.file=/etc/prometheus/prometheus.yml"
+    depends_on:
+      - mlflow_container
 
   grafana:
     image: grafana/grafana:latest
-    user: "472"
-    depends_on:
-      - prometheus
+    container_name: grafana
     ports:
-      - 3000:3000
+      - "3000:3000"
     volumes:
       - ./monitoring/datasource.yml:/etc/grafana/provisioning/datasources/datasource.yml
       - ./monitoring/dashboard.json:/etc/grafana/provisioning/dashboards/dashboard.json
       - ./monitoring/dashboard.yml:/etc/grafana/provisioning/dashboards/default.yml
-volumes:
-  models:
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    depends_on:
+      - prometheus
+
+networks:
+  mlflow_network:
+    driver: bridge

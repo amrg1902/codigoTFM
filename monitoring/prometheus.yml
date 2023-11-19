@@ -1,21 +1,7 @@
-# my global config
 global:
   scrape_interval: 15s
-  evaluation_interval: 15s
-  external_labels:
-    monitor: "app"
-
-rule_files:
 
 scrape_configs:
-  - job_name: "prometheus"
-
+  - job_name: 'mlflow'
     static_configs:
-      - targets: ["localhost:9090"]
-
-  - job_name: "api"
-    dns_sd_configs:
-      - names: ["api"]
-        port: 8086
-        type: A
-        refresh_interval: 5s
+      - targets: ['mlflow_container:8000']

@@ -1,4 +1,5 @@
-FROM continuumio/miniconda3
+# Utiliza una imagen base de Python con MLflow preinstalado
+FROM python:3.9
 
 RUN mkdir /api
 WORKDIR /api
@@ -8,7 +9,6 @@ RUN pip install -r requirements.txt
 
 COPY . .
 
-#ENV MLFLOW_TRACKING_URI=http://mlflow:5000
 ENV MLFLOW_TRACKING_URI=http://mlflow:80
 
 EXPOSE 8000
