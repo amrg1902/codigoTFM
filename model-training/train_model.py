@@ -42,7 +42,7 @@ from flask import Flask, jsonify
 from prometheus_client import start_http_server, Gauge
 
 # Inicia el servidor de métricas de Prometheus en el puerto 8000
-start_http_server(8000)
+start_http_server(80)
 
 # Define una aplicación Flask
 app = Flask(__name__)
