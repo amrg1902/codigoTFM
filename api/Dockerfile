@@ -3,7 +3,7 @@ FROM python:3.9
 
 WORKDIR /api
 
-COPY requirements.txt .
+COPY ./api/requirements.txt .
 RUN pip install -r requirements.txt
 
 COPY . .
