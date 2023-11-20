@@ -28,9 +28,24 @@ mlflow.set_tracking_uri("http://mlflow_container:80")
 def mostrar_experimentos():
     # Obtiene la lista de experimentos
     experimentos = mlflow.search_runs()
+    # Nombre del experimento
+    nombre_experimento = "Entrenamiento de prueba mas complejo"
+
+    # Obtén el ID del experimento por su nombre
+    experimento_id = mlflow.get_experiment_by_name(nombre_experimento).experiment_id
+
+    # Obtén todas las ejecuciones del experimento
+    runs = mlflow.search_runs(experiment_ids=experimento_id)
+
+        # Itera sobre las ejecuciones y muestra las métricas
+    for index, run in runs.iterrows():
+        run_id = run.run_id
+        metrics = mlflow.get_run(run_id).data.metrics
+        print(f"Metrics for run {run_id}: {metrics}")
+
 
     # Renderiza la plantilla HTML con la lista de experimentos
-    return render_template('experimentos.html', experimentos=experimentos)
+    return render_template('experimentos.html', experimentos=metrics)
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=8000)
