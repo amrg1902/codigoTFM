@@ -28,13 +28,14 @@ def mostrar_experimentos():
     for index, run in runs.iterrows():
         run_id = run.run_id
         metrics = mlflow.get_run(run_id).data.metrics
+        for metric_name, metric_value in metrics.items():
+            metricas_prometheus += f'{metric_name}{{run_id="{run_id}"}} {metric_value}\n'
         print(f"Metrics for run {run_id}: {metrics}")
 
 
     # Renderiza la plantilla HTML con la lista de experimentos
-    return render_template('experimentos.html', experimentos=metrics)
-
-
+    response = make_response(metricas_prometheus)
+    response.headers["Content-Type"] = "text/plain"
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=8000)
