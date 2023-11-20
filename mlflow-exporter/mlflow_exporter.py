@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, make_response
 from prometheus_flask_exporter import PrometheusMetrics
 import mlflow
 from sklearn.datasets import load_breast_cancer
@@ -10,19 +10,6 @@ app = Flask(__name__)
 
 # Configura la URI de seguimiento de MLflow
 mlflow.set_tracking_uri("http://mlflow_container:80")
-
-#@metrics.summary('mlflow_accuracy', 'MLflow accuracy')
-#@app.route('/train_model')
-# def train_model():
-#     with mlflow.start_run():
-#         mlflow.log_param("n_estimators", 100)
-#         mlflow.log_metric("accuracy", accuracy)
-#         mlflow.sklearn.log_model(model, "model")
-
-#     return f"Model trained with accuracy: {accuracy}"
-
-# if __name__ == '__main__':
-#     app.run(host='0.0.0.0', port=8000)
 
 @app.route('/')
 def mostrar_experimentos():
