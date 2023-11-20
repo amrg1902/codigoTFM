@@ -27,7 +27,7 @@ mlflow.set_tracking_uri("http://mlflow_container:80")
 @app.route('/')
 def mostrar_experimentos():
     # Obtiene la lista de experimentos
-    experimentos = mlflow.search_runs().experiment_name.unique()
+    experimentos = mlflow.search_runs()
 
     # Renderiza la plantilla HTML con la lista de experimentos
     return render_template('experimentos.html', experimentos=experimentos)
