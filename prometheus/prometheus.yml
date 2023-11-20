@@ -14,4 +14,4 @@ global:
 scrape_configs:
   - job_name: 'mlflow'
     static_configs:
-      - targets: ['localhost:8000']  # Ajusta el nombre y puerto del contenedor del servidor exportador
+      - targets: ['mlflow_exporter:8000']  # Ajusta el nombre y puerto del contenedor del servidor exportador
