@@ -40,6 +40,17 @@ services:
       - mlflow_postgres
       - mlflow_container
 
+  model_training_container2:
+    build:
+      context: .
+      dockerfile: model-training2/Dockerfile
+    container_name: model_training_container2
+    networks:
+      - mlflow_network
+    depends_on:
+      - mlflow_postgres
+      - mlflow_container
+
   prometheus:
     image: prom/prometheus:latest
     container_name: prometheus
