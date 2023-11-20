@@ -26,7 +26,7 @@ def mostrar_experimentos():
     
     # Inicializa metricas_prometheus
     metricas_prometheus = ""
-    
+
     # Itera sobre las ejecuciones y muestra las métricas
     for index, run in runs.iterrows():
         run_id = run.run_id
@@ -39,6 +39,8 @@ def mostrar_experimentos():
     # Renderiza la plantilla HTML con la lista de experimentos
     response = make_response(metricas_prometheus)
     response.headers["Content-Type"] = "text/plain"
+
+    return response 
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=8000)
