@@ -11,10 +11,9 @@ app = Flask(__name__)
 # Configura la URI de seguimiento de MLflow
 mlflow.set_tracking_uri("http://mlflow_container:80")
 
-@app.route('/metrics')
+@app.route('/metrics') #Para que prometheus los raspe correctamente
 def mostrar_experimentos():
-    # Obtiene la lista de experimentos
-    experimentos = mlflow.search_runs()
+
     # Nombre del experimento
     nombre_experimento = "Entrenamiento de prueba mas complejo"
 
