@@ -1,3 +1,12 @@
+# global:
+#   scrape_interval: 15s
+#   evaluation_interval: 15s
+
+# scrape_configs:
+#   - job_name: 'mlflow'
+#     static_configs:
+#       - targets: ['mlflow_container:80']
+
 global:
   scrape_interval: 15s
   evaluation_interval: 15s
@@ -5,4 +14,4 @@ global:
 scrape_configs:
   - job_name: 'mlflow'
     static_configs:
-      - targets: ['mlflow_container:80']
+      - targets: ['mlflow_exporter:8000']  # Ajusta el nombre y puerto del contenedor del servidor exportador

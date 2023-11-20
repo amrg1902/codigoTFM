@@ -18,6 +18,16 @@ services:
       - mlflow_network
     ports:
       - "80:80"
+  
+  mlflow_exporter:
+    build:
+      context: .
+      dockerfile: mlflow--exporter/Dockerfile
+    container_name: mlflow_exporter
+    networks:
+      - mlflow_network
+    ports:
+      - "8000:8000"
 
   model_training_container:
     build:

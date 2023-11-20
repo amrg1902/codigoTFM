@@ -43,12 +43,9 @@ ENV MLFLOW_EXPOSE_PROMETHEUS true
 # Establece el puerto en el que se ejecutará el servidor de MLflow
 EXPOSE 80
 
-# Copiar el archivo Python al contenedor
-COPY ./mlflow-container/mlflow_exporter.py /app/mlflow_exporter.py
-
 # Establecer el directorio de trabajo
 WORKDIR /app
 
 # Establece el comando por defecto al iniciar el contenedor
 #CMD ["wait-for-it", "mlflow_postgres:5432", "--", "mlflow", "ui", "--host", "0.0.0.0", "--port", "80", "--backend-store-uri", "postgresql://mlflow:mlflow@mlflow_postgres:5432/mlflow_db", "--expose-prometheus", "$MLFLOW_EXPOSE_PROMETHEUS"]
-CMD ["sh", "-c", "wait-for-it mlflow_postgres:5432 -- mlflow ui --host 0.0.0.0 --port 80 --backend-store-uri postgresql://mlflow:mlflow@mlflow_postgres:5432/mlflow_db --expose-prometheus $MLFLOW_EXPOSE_PROMETHEUS && python mlflow_exporter.py"]
+CMD ["sh", "-c", "wait-for-it mlflow_postgres:5432 -- mlflow ui --host 0.0.0.0 --port 80 --backend-store-uri postgresql://mlflow:mlflow@mlflow_postgres:5432/mlflow_db --expose-prometheus $MLFLOW_EXPOSE_PROMETHEUS"]

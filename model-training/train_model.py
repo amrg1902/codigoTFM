@@ -39,9 +39,8 @@ from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score
 
-
 # Configura la exportación de métricas de MLflow a Prometheus
-mlflow.prometheus.export_metrics(job_name='mlflow')
+mlflow.prometheus.export_metrics(job_name='mlflow') #Mismo job_name que en el archivo de configuración
 
 # Carga el conjunto de datos Breast Cancer Wisconsin
 data = load_breast_cancer()
