@@ -37,15 +37,29 @@ def mostrar_experimentos():
     # Obtén todas las ejecuciones del experimento
     runs = mlflow.search_runs(experiment_ids=experimento_id)
 
-        # Itera sobre las ejecuciones y muestra las métricas
+    # # Itera sobre las ejecuciones y muestra las métricas
+    # for index, run in runs.iterrows():
+    #     run_id = run.run_id
+    #     metrics = mlflow.get_run(run_id).data.metrics
+    #     print(f"Metrics for run {run_id}: {metrics}")
+
+
+    # # Renderiza la plantilla HTML con la lista de experimentos
+    # return render_template('experimentos.html', experimentos=metrics)
+
+
+    # Itera sobre las ejecuciones y muestra las métricas
+    metricas_prometheus = ""
     for index, run in runs.iterrows():
         run_id = run.run_id
         metrics = mlflow.get_run(run_id).data.metrics
-        print(f"Metrics for run {run_id}: {metrics}")
+        for metric_name, metric_value in metrics.items():
+            metricas_prometheus += f'{metric_name}{{run_id="{run_id}"}} {metric_value}\n'
 
+    # Crea una respuesta con las métricas en el formato de Prometheus
+    response = make_response(metricas_prometheus)
+    response.headers["Content-Type"] = "text/plain"
 
-    # Renderiza la plantilla HTML con la lista de experimentos
-    return render_template('experimentos.html', experimentos=metrics)
-
+    return response
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=8000)
