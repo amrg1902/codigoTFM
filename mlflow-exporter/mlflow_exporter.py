@@ -23,7 +23,10 @@ def mostrar_experimentos():
 
     # Obtén todas las ejecuciones del experimento
     runs = mlflow.search_runs(experiment_ids=experimento_id)
-
+    
+    # Inicializa metricas_prometheus
+    metricas_prometheus = ""
+    
     # Itera sobre las ejecuciones y muestra las métricas
     for index, run in runs.iterrows():
         run_id = run.run_id
