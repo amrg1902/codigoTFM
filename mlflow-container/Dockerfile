@@ -31,6 +31,10 @@ RUN pip install --upgrade pip
 COPY ./mlflow-container/requirements.txt /app/requirements.txt
 RUN pip install -r /app/requirements.txt
 
+# Instala wait-for-it
+ADD https://raw.githubusercontent.com/vishnubob/wait-for-it/master/wait-for-it.sh /usr/local/bin/wait-for-it
+RUN chmod +x /usr/local/bin/wait-for-it
+
 # Actualiza
 RUN apt-get update && \
     apt-get install -y wait-for-it
