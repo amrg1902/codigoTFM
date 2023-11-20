@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, render_template
 from prometheus_flask_exporter import PrometheusMetrics
 import mlflow
 from sklearn.datasets import load_breast_cancer
