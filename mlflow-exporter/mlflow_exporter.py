@@ -18,7 +18,7 @@ def mostrar_experimentos():
     # nombre_experimento = "Entrenamiento de prueba mas complejo"
 
     # Obtiene la lista de todos los experimentos
-    experimentos = mlflow.search_runs().experiment_name.unique()
+    experimentos = mlflow.search_runs()['experiment_name'].unique()
 
     ## Obtén el ID del experimento por su nombre
     #experimento_id = mlflow.get_experiment_by_name(nombre_experimento).experiment_id
