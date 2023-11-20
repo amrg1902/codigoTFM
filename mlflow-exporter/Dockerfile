@@ -3,7 +3,7 @@ FROM python:3.8
 
 WORKDIR /app
 
-COPY mlflow_exporter.py .
+COPY ./mlflow-exporter/mlflow_exporter.py .
 
 RUN pip install mlflow prometheus_client
 
