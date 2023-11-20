@@ -5,6 +5,9 @@ WORKDIR /app
 
 COPY ./mlflow-exporter/ .
 
-RUN pip install Flask prometheus-flask-exporter mlflow scikit-learn
+# Instala MLflow y el exportador de Prometheus desde el requirements.txt
+COPY ./mlflow-exporter/requirements.txt /app/requirements.txt
+RUN pip install -r /app/requirements.txt
+
 
 CMD ["python", "mlflow_exporter.py"]

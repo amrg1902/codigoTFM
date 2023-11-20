@@ -27,9 +27,9 @@ FROM python:3.9
 #Actualizar pip
 RUN pip install --upgrade pip
 
-# Instala MLflow y el exportador de Prometheus
-RUN pip install mlflow psycopg2-binary prometheus-flask-exporter prometheus_client flask
-#mlflow-prometheus-exporter
+# Instala MLflow y el exportador de Prometheus desde el requirements.txt
+COPY ./mlflow-container/requirements.txt /app/requirements.txt
+RUN pip install -r /app/requirements.txt
 
 # Actualiza
 RUN apt-get update && \
@@ -47,5 +47,4 @@ EXPOSE 80
 WORKDIR /app
 
 # Establece el comando por defecto al iniciar el contenedor
-#CMD ["wait-for-it", "mlflow_postgres:5432", "--", "mlflow", "ui", "--host", "0.0.0.0", "--port", "80", "--backend-store-uri", "postgresql://mlflow:mlflow@mlflow_postgres:5432/mlflow_db", "--expose-prometheus", "$MLFLOW_EXPOSE_PROMETHEUS"]
 CMD ["sh", "-c", "wait-for-it mlflow_postgres:5432 -- mlflow ui --host 0.0.0.0 --port 80 --backend-store-uri postgresql://mlflow:mlflow@mlflow_postgres:5432/mlflow_db --expose-prometheus $MLFLOW_EXPOSE_PROMETHEUS"]
