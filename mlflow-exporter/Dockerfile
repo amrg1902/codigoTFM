@@ -3,7 +3,7 @@ FROM python:3.8
 
 WORKDIR /app
 
-COPY ./mlflow-exporter/mlflow_exporter.py .
+COPY ./mlflow-exporter/ .
 
 RUN pip install Flask prometheus-flask-exporter mlflow scikit-learn
 
