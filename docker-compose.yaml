@@ -8,6 +8,8 @@ services:
     container_name: mlflow_postgres
     networks:
       - mlflow_network
+    ports: 
+      - "5432:5432"
 
   mlflow_container:
     build:
