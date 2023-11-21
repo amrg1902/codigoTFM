@@ -7,7 +7,11 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score
 from sklearn.svm import SVC
 
-# Carga el conjunto de datos Breast Cancer Wisconsin
+#Configura la URI de la base de datos y la dirección del servidor de MLflow
+mlflow.set_tracking_uri("http://mlflow_container:80")
+mlflow.set_experiment('Entrenamiento Breast Cancer Wisconsin')
+
+# Carga los datos de Breast Cancer Wisconsin
 data = load_breast_cancer()
 X_train, X_test, y_train, y_test = train_test_split(data.data, data.target, test_size=0.2, random_state=42)
 ############################################# Random Forest ###################################
