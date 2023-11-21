@@ -44,10 +44,10 @@ accuracy_svm = accuracy_score(y_test, y_pred_svm)
 
 
 # Definir el nombre del run
-run_name = "SVM"
+run_name2 = "SVM"
 
 # Log en MLflow
-with mlflow.start_run(run_name=run_name):
+with mlflow.start_run(run_name=run_name2):
     mlflow.log_param("random_state", 42)
     mlflow.log_metric("accuracy", accuracy_svm)
     mlflow.sklearn.log_model(model, "svm_model")
