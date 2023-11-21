@@ -14,21 +14,16 @@ mlflow.set_tracking_uri("http://mlflow_container:80")
 @app.route('/metrics') #Para que prometheus los raspe correctamente
 def mostrar_experimentos():
 
-    # Nombre del experimento
+# Nombre del experimento
     nombre_experimento = "Entrenamiento de prueba mas complejo"
-
-    # Obtiene la lista de todos los experimentos
-    experimentos = mlflow.search_runs()['experiment_name'].unique()
 
     # Obtén el ID del experimento por su nombre
     experimento_id = mlflow.get_experiment_by_name(nombre_experimento).experiment_id
-
     # Obtén todas las ejecuciones del experimento
     runs = mlflow.search_runs(experiment_ids=experimento_id)
     
     # Inicializa metricas_prometheus
     metricas_prometheus = ""
-
     # Itera sobre las ejecuciones y muestra las métricas
     for index, run in runs.iterrows():
         run_id = run.run_id
@@ -36,7 +31,6 @@ def mostrar_experimentos():
         for metric_name, metric_value in metrics.items():
             metricas_prometheus += f'{metric_name}{{run_id="{run_id}"}} {metric_value}\n'
         print(f"Metrics for run {run_id}: {metrics}")
-
     # Renderiza la plantilla HTML con la lista de experimentos
     response = make_response(metricas_prometheus)
     response.headers["Content-Type"] = "text/plain"
