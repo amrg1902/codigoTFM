@@ -9,30 +9,35 @@ from sklearn.metrics import accuracy_score
 # Carga el conjunto de datos Breast Cancer Wisconsin
 data = load_breast_cancer()
 X_train, X_test, y_train, y_test = train_test_split(data.data, data.target, test_size=0.2, random_state=42)
-
+############################################# Random Forest ###################################
 # Entrenamiento del modelo
 model = RandomForestClassifier(n_estimators=100, random_state=42)
 model.fit(X_train, y_train)
-
 # Realiza predicciones en el conjunto de prueba
 y_pred = model.predict(X_test)
-
 # Calcula la precisión del modelo
 accuracy = accuracy_score(y_test, y_pred)
-print(f'Accuracy: {accuracy}')
-
 # Definir el nombre del run
-run_name = "Prueba nombre modelo"
-
-# Configura la URI de seguimiento de MLflow
-mlflow.set_tracking_uri("http://mlflow_container:80")
-mlflow.set_experiment('Entrenamiento de prueba mas complejo')
-
-# Inicia un nuevo "run" de MLflow
+run_name = "Random Forest Classifier"
+# Log en MLflow
 with mlflow.start_run(run_name=run_name):
-    # Log de parámetros y métricas en MLflow
     mlflow.log_param("n_estimators", 100)
     mlflow.log_metric("accuracy", accuracy)
-    # Log del modelo en MLflow
     mlflow.sklearn.log_model(model, "model")
 
+
+################################################ SVM #############################################
+# Entrenamiento del modelo SVM
+svm_model = SVC(random_state=42)
+svm_model.fit(X_train, y_train)
+# Realiza predicciones en el conjunto de prueba
+y_pred_svm = svm_model.predict(X_test)
+# Calcula la precisión del modelo SVM
+accuracy_svm = accuracy_score(y_test, y_pred_svm)
+# Definir el nombre del run
+run_name2 = "SVM"
+# Log en MLflow
+with mlflow.start_run(run_name=run_name2):
+    mlflow.log_param("random_state", 42)
+    mlflow.log_metric("accuracy", accuracy_svm)
+    mlflow.sklearn.log_model(model, "svm_model")

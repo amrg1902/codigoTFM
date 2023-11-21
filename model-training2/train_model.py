@@ -35,17 +35,12 @@ with mlflow.start_run(run_name=run_name):
 # Entrenamiento del modelo SVM
 svm_model = SVC(random_state=42)
 svm_model.fit(X_train, y_train)
-
 # Realiza predicciones en el conjunto de prueba
 y_pred_svm = svm_model.predict(X_test)
-
 # Calcula la precisión del modelo SVM
 accuracy_svm = accuracy_score(y_test, y_pred_svm)
-
-
 # Definir el nombre del run
 run_name2 = "SVM"
-
 # Log en MLflow
 with mlflow.start_run(run_name=run_name2):
     mlflow.log_param("random_state", 42)
