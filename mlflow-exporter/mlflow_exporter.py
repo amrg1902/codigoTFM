@@ -24,13 +24,28 @@ def mostrar_experimentos():
     
     # Inicializa metricas_prometheus
     metricas_prometheus = ""
+    # # Itera sobre las ejecuciones y muestra las métricas
+    # for index, run in runs.iterrows():
+    #     run_id = run.run_id
+    #     metrics = mlflow.get_run(run_id).data.metrics
+    #     for metric_name, metric_value in metrics.items():
+    #         metricas_prometheus += f'{metric_name}{{run_id="{run_id}"}} {metric_value}\n'
+    #     print(f"Metrics for run {run_id}: {metrics}")
+    
+
     # Itera sobre las ejecuciones y muestra las métricas
     for index, run in runs.iterrows():
         run_id = run.run_id
+        run_info = mlflow.get_run(run_id).info
+        run_name = run_info.run_name
+
         metrics = mlflow.get_run(run_id).data.metrics
         for metric_name, metric_value in metrics.items():
-            metricas_prometheus += f'{metric_name}{{run_id="{run_id}"}} {metric_value}\n'
-        print(f"Metrics for run {run_id}: {metrics}")
+            # Incluye el run_name en las métricas Prometheus
+            metricas_prometheus += f'{metric_name}{{run_name="{run_name}"}} {metric_value}\n'
+        
+        print(f"Metrics for run {run_id} ({run_name}): {metrics}")
+    
     # Renderiza la plantilla HTML con la lista de experimentos
     response = make_response(metricas_prometheus)
     response.headers["Content-Type"] = "text/plain"
