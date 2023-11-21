@@ -21,14 +21,15 @@ y_pred = model.predict(X_test)
 accuracy = accuracy_score(y_test, y_pred)
 print(f'Accuracy: {accuracy}')
 
-
+# Definir el nombre del run
+run_name = "Prueba nombre modelo"
 
 # Configura la URI de seguimiento de MLflow
 mlflow.set_tracking_uri("http://mlflow_container:80")
 mlflow.set_experiment('Entrenamiento de prueba mas complejo')
 
 # Inicia un nuevo "run" de MLflow
-with mlflow.start_run():
+with mlflow.start_run(run_name=run_name):
     # Log de parámetros y métricas en MLflow
     mlflow.log_param("n_estimators", 100)
     mlflow.log_metric("accuracy", accuracy)
