@@ -1,8 +1,7 @@
-import pandas as pd
 import os
 import mlflow
 import mlflow.sklearn
-from sklearn.datasets import load_iris, load_diabetes
+from sklearn.datasets import load_iris
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.svm import SVC
@@ -10,22 +9,11 @@ from sklearn.metrics import accuracy_score
 
 #Configura la URI de la base de datos y la dirección del servidor de MLflow
 mlflow.set_tracking_uri("http://mlflow_container:80")
-mlflow.set_experiment('Entrenamiento prueba data diabetes')
+mlflow.set_experiment('Entrenamiento prueba data iris')
 
-# Cargar el conjunto de datos
-data_diabetes = load_diabetes()
-X_diabetes = pd.DataFrame(data_diabetes.data, columns=[f'feature_{i}' for i in range(1, 11)])
-y_diabetes = pd.Series(data_diabetes.target, name='target')
-
-# Seleccionar columnas específicas
-selected_columns = ['age', 'bmi', 'bp', 's1', 's2', 's3']
-
-# Crear un nuevo DataFrame con las columnas seleccionadas
-selected_data = X_diabetes[selected_columns]
-
-# División de entrenamiento y prueba
-X_train, X_test, y_train, y_test = train_test_split(selected_data, y_diabetes, test_size=0.2, random_state=42)
-
+# Carga los datos de iris
+iris = load_iris()
+X_train, X_test, y_train, y_test = train_test_split(iris.data, iris.target, test_size=0.2, random_state=42)
 ############################################# Random Forest ###################################
 # Entrenamiento del modelo
 model = RandomForestClassifier(n_estimators=100, random_state=42)
@@ -41,6 +29,7 @@ with mlflow.start_run(run_name=run_name):
     mlflow.log_param("n_estimators", 100)
     mlflow.log_metric("accuracy", accuracy)
     mlflow.sklearn.log_model(model, "model")
+
 
 ################################################ SVM #############################################
 # Entrenamiento del modelo SVM
