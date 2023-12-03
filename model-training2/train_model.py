@@ -17,6 +17,22 @@ data_diabetes = load_diabetes()
 X_diabetes = pd.DataFrame(data_diabetes.data, columns=[f'feature_{i}' for i in range(1, 11)])
 y_diabetes = pd.Series(data_diabetes.target, name='target')
 
+# Renombrar las columnas
+column_name_mapping = {
+    'feature_1': 'age',
+    'feature_2': 'sex',
+    'feature_3': 'bmi',
+    'feature_4': 'bp',  
+    'feature_5': 's1',  
+    'feature_6': 's2',  
+    'feature_7': 's3',  
+    'feature_8': 's4',  
+    'feature_9': 's5',  
+    'feature_10': 's6'  
+}
+
+X_diabetes.rename(columns=column_name_mapping, inplace=True)
+
 # Seleccionar columnas específicas
 selected_columns = ['age', 'bmi', 'bp', 's1', 's2', 's3']
 
