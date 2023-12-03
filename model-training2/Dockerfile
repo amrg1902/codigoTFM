@@ -11,8 +11,6 @@ RUN pip install -r /app/requirements.txt
 # Copia el script de entrenamiento al contenedor
 COPY ./model-training2/train_model.py /app/train_model.py
 
-
-
 # Establece la variable de entorno para la URI de la base de datos de MLflow
 ENV MLFLOW_DATABASE_URI postgresql://mlflow:mlflow@mlflow_postgres:5432/mlflow_db
 

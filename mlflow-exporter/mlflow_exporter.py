@@ -15,7 +15,7 @@ mlflow.set_tracking_uri("http://mlflow_container:80")
 def mostrar_experimentos():
 
 # Nombre del experimento
-    nombre_experimento = "Entrenamiento prueba data iris"
+    nombre_experimento = "Entrenamiento prueba data diabetes"
 
     # Obtén el ID del experimento por su nombre
     experimento_id = mlflow.get_experiment_by_name(nombre_experimento).experiment_id
