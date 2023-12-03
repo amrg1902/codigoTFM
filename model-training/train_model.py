@@ -53,10 +53,10 @@ y_pred_svm = svm_model.predict(X_test)
 # Calcula la precisión del modelo SVM
 accuracy_svm = accuracy_score(y_test, y_pred_svm)
 # Obtener la matriz de confusión
-conf_matrix = confusion_matrix(y_test, y_pred)
+conf_matrix = confusion_matrix(y_test, y_pred_svm)
 # Calcular precision y recall
-precision = precision_score(y_test, y_pred)
-recall = recall_score(y_test, y_pred)
+precision = precision_score(y_test, y_pred_svm)
+recall = recall_score(y_test, y_pred_svm)
 # Definir el nombre del run
 run_name2 = "SVM"
 # Log en MLflow

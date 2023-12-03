@@ -10,7 +10,13 @@ services:
       - mlflow_network
     ports: 
       - "5432:5432"
-
+      ############PRUEBO LA APP###############
+  app:
+    build: app
+    ports:
+      - 8501:8501
+     ############PRUEBO LA APP###############
+     
   mlflow_container:
     build:
       context: .
