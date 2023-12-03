@@ -34,7 +34,7 @@ column_name_mapping = {
 X_diabetes.rename(columns=column_name_mapping, inplace=True)
 
 # Seleccionar columnas específicas
-selected_columns = ['age', 'bmi', 'bp', 's1', 's2', 's3']
+selected_columns = ['age', 'bmi', 'bp', 's1', 's2', 's3', 's4', 's5', 's6' ]
 
 # Crear un nuevo DataFrame con las columnas seleccionadas
 selected_data = X_diabetes[selected_columns]
