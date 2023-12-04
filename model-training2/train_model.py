@@ -18,7 +18,7 @@ from sklearn.preprocessing import StandardScaler
 
 #Configura la URI de la base de datos y la dirección del servidor de MLflow
 mlflow.set_tracking_uri("http://mlflow_container:80")
-mlflow.set_experiment("Entrenamiento prueba data diabetes")
+mlflow.set_experiment("Entrenamiento dataset diabetes")
 
 # Cargar el conjunto de datos
 data_diabetes = load_diabetes()
