@@ -10,6 +10,9 @@ from sklearn.metrics import accuracy_score
 from sklearn.metrics import mean_squared_error, r2_score, mean_absolute_error
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
 
+#Configura la URI de la base de datos y la dirección del servidor de MLflow
+mlflow.set_tracking_uri("http://mlflow_container:80")
+mlflow.set_experiment("Entrenamiento prueba data diabetes")
 
 # Cargar el conjunto de datos
 data_diabetes = load_diabetes()
