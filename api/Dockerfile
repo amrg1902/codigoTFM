@@ -3,12 +3,11 @@ FROM python:3.8
 
 WORKDIR /app
 
-#COPY ./api/ .
-COPY . .
+COPY ./api/ .
 
 # Instala MLflow y el exportador de Prometheus desde el requirements.txt
-#COPY ./api/requirements.txt /app/requirements.txt
-COPY ./requirements.txt /app/requirements.txt
+COPY ./api/requirements.txt /app/requirements.txt
+#COPY ./requirements.txt /app/requirements.txt
 RUN pip install -r /app/requirements.txt
 
 
