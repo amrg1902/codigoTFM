@@ -7,10 +7,7 @@ COPY ./api/ /app/.
 
 # Instala MLflow y el exportador de Prometheus desde el requirements.txt
 COPY ./api/requirements.txt /app/requirements.txt
-COPY ./api/index.html /app/index.html
-
 RUN pip install -r /app/requirements.txt
-
 
 ENV MLFLOW_TRACKING_URI=http://mlflow:80
 
