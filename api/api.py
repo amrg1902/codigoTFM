@@ -65,9 +65,11 @@ def model_output():
         model_name = fetch_best_model()
         if model_name:
             model = fetch_model(model_name)
+            print(model)
             if model:
                 input_data = pd.DataFrame({"age": [age], "bmi": [bmi], "bp": [bp], "s1": [s1], "s2": [s2], "s3": [s3], "s4": [s4], "s5": [s5], "s6": [s6]})
                 prediction = model.predict(input_data)
+                print(prediction)
                 return render_template('index.html', prediction=f"Prediction: {prediction[0]}")
             else:
                 return render_template('index.html', prediction="Error: Model not loaded")
