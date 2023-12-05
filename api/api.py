@@ -1,4 +1,4 @@
-from flask import Flask, render_template, make_response
+from flask import Flask,  render_template, request
 import pandas as pd
 import mlflow
 
@@ -36,19 +36,46 @@ def fetch_model(model_name):
         return model
     except Exception as e:
         print(f"Error al cargar el modelo: {e}")
-        return None
+        return None       
 
-@app.route('/predict')
-def model_output(age: float, bmi: float, bp: float, s1: float, s2: float, s3: float, s4: float, s5: float, s6: float):
-    print("Works I")
+@app.route('/')
+def index():
+    return render_template('index.html')
+
+@app.route('/predict', methods=['GET'])
+def model_output():
+    age = float(request.args.get('age'))
+    bmi = float(request.args.get('bmi'))
+    bp = float(request.args.get('bp'))
+    s1 = float(request.args.get('s1'))
+    s2 = float(request.args.get('s2'))
+    s3 = float(request.args.get('s3'))
+    s4 = float(request.args.get('s4'))
+    s5 = float(request.args.get('s5'))
+    s6 = float(request.args.get('s6'))
+
     model_name = fetch_best_model()
     model = fetch_model(model_name)
-    print("Works II")
-    input = pd.DataFrame({"age": [age], "bmi": [bmi], "bp": [bp], "s1": [s1], "s2": [s2], "s3": [s3], "s4": [s4], "s5": [s5], "s6": [s6]})
-    prediction = model.predict(input)
-    print(prediction)
-    return {"prediction": prediction[0]}
+
+    input_data = pd.DataFrame({"age": [age], "bmi": [bmi], "bp": [bp], "s1": [s1], "s2": [s2], "s3": [s3], "s4": [s4], "s5": [s5], "s6": [s6]})
+    prediction = model.predict(input_data)
+
+    return render_template('index.html', prediction=f"Prediction: {prediction[0]}")
 
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0', port=7654)          
+    app.run(debug=True, host='0.0.0.0', port=7654)
 
+
+#@app.route('/predict')
+# def model_output(age: float, bmi: float, bp: float, s1: float, s2: float, s3: float, s4: float, s5: float, s6: float):
+#     print("Works I")
+#     model_name = fetch_best_model()
+#     model = fetch_model(model_name)
+#     print("Works II")
+#     input = pd.DataFrame({"age": [age], "bmi": [bmi], "bp": [bp], "s1": [s1], "s2": [s2], "s3": [s3], "s4": [s4], "s5": [s5], "s6": [s6]})
+#     prediction = model.predict(input)
+#     print(prediction)
+#     return {"prediction": prediction[0]}
+
+# if __name__ == '__main__':
+#     app.run(debug=True, host='0.0.0.0', port=7654)   

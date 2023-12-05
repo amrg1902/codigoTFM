@@ -10,12 +10,12 @@ services:
       - mlflow_network
     ports: 
       - "5432:5432"
-      ############PRUEBO LA APP###############
-  app:
-    build: app
-    ports:
-      - 8501:8501
-     ############PRUEBO LA APP###############
+  #     ############PRUEBO LA APP###############
+  # app:
+  #   build: app
+  #   ports:
+  #     - 8501:8501
+  #    ############PRUEBO LA APP###############
     ############## PRUEBO LA API ############
   api:
     build:
@@ -26,6 +26,8 @@ services:
       - mlflow_network
     ports:
       - "7654:7654"
+    depends_on:
+      - mlflow_container
     ############## PRUEBO LA API ############
   mlflow_container:
     build:
