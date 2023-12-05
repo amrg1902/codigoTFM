@@ -51,7 +51,7 @@ def model_output(age: float, bmi: float, bp: float, s1: float, s2: float, s3: fl
     return {"prediction": prediction[0]}
 
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0', port=7000)
+    app.run(debug=True, host='0.0.0.0', port=7654)
 
 
 

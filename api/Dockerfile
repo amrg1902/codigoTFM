@@ -14,4 +14,4 @@ RUN pip install -r /app/requirements.txt
 ENV MLFLOW_TRACKING_URI=http://mlflow:80
 
 EXPOSE 8000
-CMD ["sh", "-c", "uvicorn api:app --port 8086 --host 0.0.0.0"]
+CMD ["sh", "-c", "uvicorn api:app --port 7654 --host 0.0.0.0"]
