@@ -16,7 +16,17 @@ services:
     ports:
       - 8501:8501
      ############PRUEBO LA APP###############
-
+    ############## PRUEBO LA API ############
+  api:
+    build:
+      context: .
+      dockerfile: api/Dockerfile
+    container_name: api
+    networks:
+      - mlflow_network
+    ports:
+      - "7000:7000"
+    ############## PRUEBO LA API ############
   mlflow_container:
     build:
       context: .

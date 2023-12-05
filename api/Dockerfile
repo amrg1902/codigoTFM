@@ -1,12 +1,14 @@
-FROM continuumio/miniconda3
+# Dockerfile_mlflow_exporter
+FROM python:3.8
 
-RUN mkdir /api
-WORKDIR /api
+WORKDIR /app
 
-COPY requirements.txt .
-RUN pip install -r requirements.txt
+COPY ./api/ .
 
-COPY . .
+# Instala MLflow y el exportador de Prometheus desde el requirements.txt
+COPY ./api/requirements.txt /app/requirements.txt
+RUN pip install -r /app/requirements.txt
+
 
 ENV MLFLOW_TRACKING_URI=http://mlflow:80
 

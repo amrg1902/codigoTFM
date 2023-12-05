@@ -70,10 +70,10 @@ run_name_lr = "LinearRegression"
 # Log en MLflow
 with mlflow.start_run(run_name=run_name_lr):
     # Log de métricas
-    mlflow.log_metric("LR_MSE", mse_lr)
-    mlflow.log_metric("LR_RMSE", rmse_lr)
-    mlflow.log_metric("LR_R2", r2_lr)
-    mlflow.log_metric("LR_MAE", mae_lr)
+    mlflow.log_metric("MSE", mse_lr)
+    mlflow.log_metric("RMSE", rmse_lr)
+    mlflow.log_metric("R2", r2_lr)
+    mlflow.log_metric("MAE", mae_lr)
 
     mlflow.sklearn.log_model(model_lr, "model_lr")
 
@@ -97,10 +97,10 @@ run_name_svr = "SVR"
 # Log en MLflow
 with mlflow.start_run(run_name=run_name_svr):
     # Log de métricas
-    mlflow.log_metric("SVR_MSE", mse_svr)
-    mlflow.log_metric("SVR_RMSE", rmse_svr)
-    mlflow.log_metric("SVR_R2", r2_svr)
-    mlflow.log_metric("SVR_MAE", mae_svr)
+    mlflow.log_metric("MSE", mse_svr)
+    mlflow.log_metric("RMSE", rmse_svr)
+    mlflow.log_metric("R2", r2_svr)
+    mlflow.log_metric("MAE", mae_svr)
 
     mlflow.sklearn.log_model(model_svr, "model_svr")
 
@@ -124,10 +124,10 @@ run_name_rf = "RandomForestRegressor"
 # Log en MLflow
 with mlflow.start_run(run_name=run_name_rf):
     # Log de métricas
-    mlflow.log_metric("RF_MSE", mse_rf)
-    mlflow.log_metric("RF_RMSE", rmse_rf)
-    mlflow.log_metric("RF_R2", r2_rf)
-    mlflow.log_metric("RF_MAE", mae_rf)
+    mlflow.log_metric("MSE", mse_rf)
+    mlflow.log_metric("RMSE", rmse_rf)
+    mlflow.log_metric("R2", r2_rf)
+    mlflow.log_metric("MAE", mae_rf)
 
     mlflow.sklearn.log_model(model_rf, "model_rf")
 
@@ -151,10 +151,10 @@ run_name_gb = "GradientBoostingRegressor"
 # Log en MLflow
 with mlflow.start_run(run_name=run_name_gb):
     # Log de métricas
-    mlflow.log_metric("GB_MSE", mse_gb)
-    mlflow.log_metric("GB_RMSE", rmse_gb)
-    mlflow.log_metric("GB_R2", r2_gb)
-    mlflow.log_metric("GB_MAE", mae_gb)
+    mlflow.log_metric("MSE", mse_gb)
+    mlflow.log_metric("RMSE", rmse_gb)
+    mlflow.log_metric("R2", r2_gb)
+    mlflow.log_metric("MAE", mae_gb)
 
     mlflow.sklearn.log_model(model_gb, "model_gb")
 ################################################ Red Neuronal #############################################
@@ -182,9 +182,9 @@ run_name_mlp = "MLPRegressor"
 # Log en MLflow
 with mlflow.start_run(run_name=run_name_mlp):
     # Log de métricas
-    mlflow.log_metric("MLP_MSE", mse_mlp)
-    mlflow.log_metric("MLP_RMSE", rmse_mlp)
-    mlflow.log_metric("MLP_R2", r2_mlp)
-    mlflow.log_metric("MLP_MAE", mae_mlp)
+    mlflow.log_metric("MSE", mse_mlp)
+    mlflow.log_metric("RMSE", rmse_mlp)
+    mlflow.log_metric("R2", r2_mlp)
+    mlflow.log_metric("MAE", mae_mlp)
 
     mlflow.sklearn.log_model(model_mlp, "model_mlp")
