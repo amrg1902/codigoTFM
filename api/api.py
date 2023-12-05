@@ -1,5 +1,4 @@
 from flask import Flask, render_template, make_response
-from prometheus_flask_exporter import PrometheusMetrics
 import mlflow
 
 app = Flask(__name__)
