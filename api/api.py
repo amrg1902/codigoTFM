@@ -5,45 +5,44 @@ import mlflow
 app = Flask(__name__)
 # Configura la URI de seguimiento de MLflow
 mlflow.set_tracking_uri("http://mlflow_container:80")
+nombre_experimento = "Entrenamiento dataset Diabetes"
 
-def fetch_latest_model():
-    client = MlflowClient()
-    # Obtener todos los experimentos
-    experiments = client.list_experiments()
-    # Inicializar variables para el experimento y la métrica más baja
-    best_experiment = None
+def fetch_best_model():
+    #Inicializacion metrica mse
     lowest_mse = float('inf')
-    for experiment in experiments:
-        # Obtener todas las corridas dentro del experimento
-        runs = client.search_runs(experiment.experiment_id)
-        for run in runs:
-            # Obtener las métricas asociadas a la corrida
-            metrics = client.get_run(run.info.run_id).data.metrics
-            # Verificar si la métrica "MSE" está presente
-            if 'MSE' in metrics:
-                current_mse = metrics['MSE']
-                # Actualizar el mejor experimento y métrica si encontramos una menor
-                if current_mse < lowest_mse:
-                    lowest_mse = current_mse
-                    best_experiment = experiment.name
-    return best_experiment
+    # Obtén el ID del experimento por su nombre
+    experimento_id = mlflow.get_experiment_by_name(nombre_experimento).experiment_id
+    # Obtén todas las ejecuciones del experimento
+    runs = mlflow.search_runs(experiment_ids=experimento_id)
 
-def fetch_latest_version(model_name):
-    client = MlflowClient()
-    # Obtener la última versión registrada del modelo en el experimento
-    latest_version = client.get_latest_versions(model_name, stages=['Production'])[0].version
-    # Cargar el modelo
-    model = mlflow.pyfunc.load_model(
-        model_uri=f"models:/{model_name}/{latest_version}"
-    )
-    return model
+    for index, run in runs.iterrows():
+        run_id = run.run_id
+        run_info = mlflow.get_run(run_id).info
+        run_name = run_info.run_name
+
+        metrics = mlflow.get_run(run_id).data.metrics
+        for metric_name, metric_value in metrics.items():
+            if(metric_name == "MSE"):
+                current_mse = metric_value
+                if (current_mse < lowest_mse):
+                    lowest_mse = current_mse
+                    best_model = run_name
+    return best_model
+
+def fetch_model(model_name):
+    try:
+        # Carga el modelo más reciente
+        model = mlflow.sklearn.load_model(f"models:/{model_name}/Production")
+        return model
+    except Exception as e:
+        print(f"Error al cargar el modelo: {e}")
+        return None
 
 @app.route('/predict')
 def model_output(age: float, bmi: float, bp: float, s1: float, s2: float, s3: float, s4: float, s5: float, s6: float):
-    nombre_experimento = "Entrenamiento dataset Diabetes"
     print("Works I")
-    model_name = fetch_latest_model()
-    model = fetch_latest_version(model_name)
+    model_name = fetch_best_model()
+    model = fetch_model(model_name)
     print("Works II")
     input = pd.DataFrame({"age": [age], "bmi": [bmi], "bp": [bp], "s1": [s1], "s2": [s2], "s3": [s3], "s4": [s4], "s5": [s5], "s6": [s6]})
     prediction = model.predict(input)
@@ -51,7 +50,5 @@ def model_output(age: float, bmi: float, bp: float, s1: float, s2: float, s3: fl
     return {"prediction": prediction[0]}
 
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0', port=7654)
-
-
+    app.run(debug=True, host='0.0.0.0', port=7654)          
 
