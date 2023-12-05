@@ -44,23 +44,38 @@ def index():
 
 @app.route('/predict', methods=['GET'])
 def model_output():
-    age = float(request.args.get('age'))
-    bmi = float(request.args.get('bmi'))
-    bp = float(request.args.get('bp'))
-    s1 = float(request.args.get('s1'))
-    s2 = float(request.args.get('s2'))
-    s3 = float(request.args.get('s3'))
-    s4 = float(request.args.get('s4'))
-    s5 = float(request.args.get('s5'))
-    s6 = float(request.args.get('s6'))
+    try:
+        age = float(request.args.get('age'))
+        bmi = float(request.args.get('bmi'))
+        bp = float(request.args.get('bp'))
+        s1 = float(request.args.get('s1'))
+        s2 = float(request.args.get('s2'))
+        s3 = float(request.args.get('s3'))
+        s4 = float(request.args.get('s4'))
+        s5 = float(request.args.get('s5'))
+        s6 = float(request.args.get('s6'))
 
-    model_name = fetch_best_model()
-    model = fetch_model(model_name)
+    # model_name = fetch_best_model()
+    # model = fetch_model(model_name)
 
-    input_data = pd.DataFrame({"age": [age], "bmi": [bmi], "bp": [bp], "s1": [s1], "s2": [s2], "s3": [s3], "s4": [s4], "s5": [s5], "s6": [s6]})
-    prediction = model.predict(input_data)
+    # input_data = pd.DataFrame({"age": [age], "bmi": [bmi], "bp": [bp], "s1": [s1], "s2": [s2], "s3": [s3], "s4": [s4], "s5": [s5], "s6": [s6]})
+    # prediction = model.predict(input_data)
 
-    return render_template('index.html', prediction=f"Prediction: {prediction[0]}")
+    # return render_template('index.html', prediction=f"Prediction: {prediction[0]}")
+        model_name = fetch_best_model()
+        if model_name:
+            model = fetch_model(model_name)
+            if model:
+                input_data = pd.DataFrame({"age": [age], "bmi": [bmi], "bp": [bp], "s1": [s1], "s2": [s2], "s3": [s3], "s4": [s4], "s5": [s5], "s6": [s6]})
+                prediction = model.predict(input_data)
+                return render_template('index.html', prediction=f"Prediction: {prediction[0]}")
+            else:
+                return render_template('index.html', prediction="Error: Model not loaded")
+        else:
+            return render_template('index.html', prediction="Error: No best model found")
+    except Exception as e:
+        return render_template('index.html', prediction=f"Error: {str(e)}")
+
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=7654)
