@@ -16,7 +16,7 @@ s6 = st.text_input("s6")
 def get_api(params):
     #url = f"http://api:8086/predict/"
     # Reemplaza 'http://api:8086' con la URL correcta de tu servidor Flask
-    url = "http://localhost:7000/predict/"
+    url = "http://localhost:7654/predict/"
     response = rs.get(url, params=params)
     return response.content
 
