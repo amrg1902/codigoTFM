@@ -1,4 +1,5 @@
 from flask import Flask, render_template, make_response
+import pandas as pd
 import mlflow
 
 app = Flask(__name__)
