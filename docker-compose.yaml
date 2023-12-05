@@ -16,12 +16,22 @@ services:
     ports:
       - 8501:8501
      ############PRUEBO LA APP###############
-     
+
+     ########### PRUEBO LA API ##############
+  api:
+    build: api
+    ports:
+      - 8086:8086
+    volumes:
+      - models:/mlruns
+     ########### PRUEBO LA API ##############
   mlflow_container:
     build:
       context: .
       dockerfile: mlflow-container/Dockerfile
     container_name: mlflow_container
+    volumes:
+      - models:/mlruns
     networks:
       - mlflow_network
     ports:
@@ -47,17 +57,8 @@ services:
     depends_on:
       - mlflow_postgres
       - mlflow_container
-
-  model_training_container2:
-    build:
-      context: .
-      dockerfile: model-training2/Dockerfile
-    container_name: model_training_container2
-    networks:
-      - mlflow_network
-    depends_on:
-      - mlflow_postgres
-      - mlflow_container
+    volumes:
+      - models:/mlruns
 
   prometheus:
     image: prom/prometheus:latest

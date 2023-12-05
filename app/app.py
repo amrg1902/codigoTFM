@@ -1,10 +1,16 @@
 import streamlit as st
 import requests as rs
 
-sepal_length = st.text_input("Sepal Length")
-sepal_width = st.text_input("Sepal Width")
-petal_length = st.text_input("Petal Length")
-petal_width = st.text_input("Petal Width ")
+
+age = st.text_input("Age")
+bmi = st.text_input("Body Mass index")
+bp = st.text_input("Blood Pressure")
+s1 = st.text_input("s1")
+s2 = st.text_input("s2")
+s3 = st.text_input("s3")
+s4 = st.text_input("s4")
+s5 = st.text_input("s5")
+s6 = st.text_input("s6")
 
 
 def get_api(params):
@@ -15,10 +21,15 @@ def get_api(params):
 
 if st.button("Get response"):
     params = {
-        "sepal_length": float(sepal_length),
-        "sepal_width": float(sepal_width),
-        "petal_length": float(petal_length),
-        "petal_width": float(petal_width)
+        "age": float(age),
+        "bmi": float(bmi),
+        "bp": float(bp),
+        "s1": float(s1),
+        "s2": float(s2),
+        "s3": float(s3),
+        "s4": float(s4),
+        "s5": float(s5),
+        "s6": float(s6)
     }
 
     data = get_api(params)
