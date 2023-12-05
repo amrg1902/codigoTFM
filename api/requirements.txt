@@ -1,6 +1,5 @@
-Flask
-prometheus-flask-exporter 
+flask
+prometheus_client
 mlflow
-sklearn
 pandas
 scikit-learn
