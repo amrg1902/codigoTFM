@@ -29,56 +29,47 @@ def fetch_best_model():
                     best_model = run_name
     return best_model
 
-def fetch_model(model_name):
-    try:
-        # Carga el modelo más reciente
-        model = mlflow.sklearn.load_model(f"models:/{model_name}/Production")
-        return model
-    except Exception as e:
-        print(f"Error al cargar el modelo: {e}")
-        return None       
+def fetch_best_model_uri():
+    best_model_name = fetch_best_model()
+    
+    if best_model_name:
+        experimento_id = mlflow.get_experiment_by_name(nombre_experimento).experiment_id
+        best_model_run = mlflow.search_runs(experiment_ids=experimento_id, filter_string=f"run_name = '{best_model_name}'").iloc[0]
+        
+        # Obtiene la URI del modelo
+        model_uri = f"runs:/{best_model_run.run_id}/model"
+        return model_uri
+    else:
+        return None
+
+
+
 
 @app.route('/')
 def index():
+    return render_template('index.html')
 
-    best_model = fetch_best_model()
-    mejor = fetch_model(best_model)
+@app.route('/predict', methods=['GET'])
+def model_output():
+        
+        age = float(request.args.get('age'))
+        bmi = float(request.args.get('bmi'))
+        bp = float(request.args.get('bp'))
+        s1 = float(request.args.get('s1'))
+        s2 = float(request.args.get('s2'))
+        s3 = float(request.args.get('s3'))
+        s4 = float(request.args.get('s4'))
+        s5 = float(request.args.get('s5'))
+        s6 = float(request.args.get('s6'))
 
-    return mejor
-
-
-# @app.route('/')
-# def index():
-#     return render_template('index.html')
-
-# @app.route('/predict', methods=['GET'])
-# def model_output():
-#     try:
-#         age = float(request.args.get('age'))
-#         bmi = float(request.args.get('bmi'))
-#         bp = float(request.args.get('bp'))
-#         s1 = float(request.args.get('s1'))
-#         s2 = float(request.args.get('s2'))
-#         s3 = float(request.args.get('s3'))
-#         s4 = float(request.args.get('s4'))
-#         s5 = float(request.args.get('s5'))
-#         s6 = float(request.args.get('s6'))
-
-#         model_name = fetch_best_model()
-#         if model_name:
-#             model = fetch_model(model_name)
-#             print(model)
-#             if model:
-#                 input_data = pd.DataFrame({"age": [age], "bmi": [bmi], "bp": [bp], "s1": [s1], "s2": [s2], "s3": [s3], "s4": [s4], "s5": [s5], "s6": [s6]})
-#                 prediction = model.predict(input_data)
-#                 print(prediction)
-#                 return render_template('index.html', prediction=f"Prediction: {prediction[0]}")
-#             else:
-#                 return render_template('index.html', prediction="Error: Model not loaded")
-#         else:
-#             return render_template('index.html', prediction="Error: No best model found")
-#     except Exception as e:
-#         return render_template('index.html', prediction=f"Error: {str(e)}")
+        if logged_model:
+            # Carga la URI del mejor modelo
+            logged_model = fetch_best_model_uri()
+            # Load model as a PyFuncModel.
+            loaded_model = mlflow.pyfunc.load_model(logged_model)
+            input_data = pd.DataFrame({"age": [age], "bmi": [bmi], "bp": [bp], "s1": [s1], "s2": [s2], "s3": [s3], "s4": [s4], "s5": [s5], "s6": [s6]})
+            prediction = loaded_model.predict(pd.DataFrame(input_data))
+            return prediction
 
 
 if __name__ == '__main__':
