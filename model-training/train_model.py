@@ -43,6 +43,44 @@ X_diabetes.rename(columns=column_name_mapping, inplace=True)
 
 # Seleccionar columnas específicas
 selected_columns = ['age', 'bmi', 'bp', 's1', 's2', 's3', 's4', 's5', 's6' ]
+# Definir las funciones de mapeo lineal para cada característica
+def map_age(value):
+    return value * 55 + 55
+
+def map_bmi(value):
+    return value * 20 + 20
+
+def map_bp(value):
+    return value * 37.5 + 97.5
+
+def map_s1(value):
+    return value * 50 + 200
+
+def map_s2(value):
+    return value * 80 + 140
+
+def map_s3(value):
+    return value * 30 + 60
+
+def map_s4(value):
+    return value * 3 + 3.5
+
+def map_s5(value):
+    return value * 35 + 185
+
+def map_s6(value):
+    return value * 50 + 110
+
+# Aplicar las funciones de mapeo a cada columna
+X_diabetes['age'] = X_diabetes['age'].apply(map_age)
+X_diabetes['bmi'] = X_diabetes['bmi'].apply(map_bmi)
+X_diabetes['bp'] = X_diabetes['bp'].apply(map_bp)
+X_diabetes['s1'] = X_diabetes['s1'].apply(map_s1)
+X_diabetes['s2'] = X_diabetes['s2'].apply(map_s2)
+X_diabetes['s3'] = X_diabetes['s3'].apply(map_s3)
+X_diabetes['s4'] = X_diabetes['s4'].apply(map_s4)
+X_diabetes['s5'] = X_diabetes['s5'].apply(map_s5)
+X_diabetes['s6'] = X_diabetes['s6'].apply(map_s6)
 
 # Crear un nuevo DataFrame con las columnas seleccionadas
 selected_data = X_diabetes[selected_columns]
