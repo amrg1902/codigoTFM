@@ -61,10 +61,9 @@ def model_output():
         s4 = float(request.args.get('s4'))
         s5 = float(request.args.get('s5'))
         s6 = float(request.args.get('s6'))
-
+        # Carga la URI del mejor modelo
+        logged_model = fetch_best_model_uri()
         if logged_model:
-            # Carga la URI del mejor modelo
-            logged_model = fetch_best_model_uri()
             # Load model as a PyFuncModel.
             loaded_model = mlflow.pyfunc.load_model(logged_model)
             input_data = pd.DataFrame({"age": [age], "bmi": [bmi], "bp": [bp], "s1": [s1], "s2": [s2], "s3": [s3], "s4": [s4], "s5": [s5], "s6": [s6]})
