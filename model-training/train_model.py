@@ -75,7 +75,7 @@ with mlflow.start_run(run_name=run_name_lr):
     mlflow.log_metric("R2", r2_lr)
     mlflow.log_metric("MAE", mae_lr)
 
-    mlflow.sklearn.log_model(model_lr, "model_lr")
+    mlflow.sklearn.log_model(model_lr, "LinearRegression")
 
 ################################################ SVR #############################################
 # Entrenamiento del modelo SVR
@@ -102,7 +102,7 @@ with mlflow.start_run(run_name=run_name_svr):
     mlflow.log_metric("R2", r2_svr)
     mlflow.log_metric("MAE", mae_svr)
 
-    mlflow.sklearn.log_model(model_svr, "model_svr")
+    mlflow.sklearn.log_model(model_svr, "SVR")
 
 ################################################ Random Forest Regressor #############################################
 # Entrenamiento del modelo Random Forest Regressor
@@ -129,7 +129,7 @@ with mlflow.start_run(run_name=run_name_rf):
     mlflow.log_metric("R2", r2_rf)
     mlflow.log_metric("MAE", mae_rf)
 
-    mlflow.sklearn.log_model(model_rf, "model_rf")
+    mlflow.sklearn.log_model(model_rf, "RandomForestRegressor")
 
 ################################################ Gradient boosting regressor #############################################
 # Entrenamiento del modelo Gradient Boosting Regressor
@@ -156,7 +156,7 @@ with mlflow.start_run(run_name=run_name_gb):
     mlflow.log_metric("R2", r2_gb)
     mlflow.log_metric("MAE", mae_gb)
 
-    mlflow.sklearn.log_model(model_gb, "model_gb")
+    mlflow.sklearn.log_model(model_gb, "GradientBoostingRegressor")
 ################################################ Red Neuronal #############################################
 # Escalado de características para la red neuronal
 scaler = StandardScaler()
@@ -187,4 +187,4 @@ with mlflow.start_run(run_name=run_name_mlp):
     mlflow.log_metric("R2", r2_mlp)
     mlflow.log_metric("MAE", mae_mlp)
 
-    mlflow.sklearn.log_model(model_mlp, "model_mlp")
+    mlflow.sklearn.log_model(model_mlp, "MLPRegressor")
