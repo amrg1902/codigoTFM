@@ -50,16 +50,10 @@ def index():
         best_model_run = mlflow.search_runs(experiment_ids=experimento_id, filter_string=f"run_name = '{best_model_name}'").iloc[0]
         best_model_metric = best_model_run["MSE"]
 
-    return render_template('index.html', best_model=best_model_name, best_model_metric=best_model_metric)
-
-@app.route('/model_details')
-def model_details():
-    # Obtén el mejor modelo y carga los detalles del modelo
-    best_model_name = fetch_best_model()
-    model = fetch_model(best_model_name)
-
-    return render_template('model_details.html', best_model=best_model_name, model_details=model)
-
+    # Imprime los valores en la consola
+    print(f"Mejor modelo: {best_model_name}")
+    print(f"Métrica asociada: {best_model_metric}")
+    
 
 # @app.route('/')
 # def index():
