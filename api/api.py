@@ -54,6 +54,7 @@ def index():
     print(f"Mejor modelo: {best_model_name}")
     print(f"Mejor modelo run: {best_model_run}")
     #print(f"Métrica asociada: {best_model_run}")
+    return best_model_name, best_model_run
 
 
 # @app.route('/')
