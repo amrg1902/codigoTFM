@@ -34,8 +34,8 @@ def mostrar_experimentos():
         metrics = mlflow.get_run(run_id).data.metrics
         for metric_name, metric_value in metrics.items():
             # Incluye el run_name en las métricas Prometheus
-            #metricas_prometheus += f'{metric_name}{{run_name="{run_name}"}} {metric_value}\n'
-            metricas_prometheus += f'{{run_id="{run_id}"}} {{run_name="{run_name}"}} {{run_info="{run_info}"}}\n' 
+            metricas_prometheus += f'{metric_name}{{run_name="{run_name}"}} {metric_value}\n'
+            #metricas_prometheus += f'{{run_id="{run_id}"}} {{run_name="{run_name}"}} {{run_info="{run_info}"}}\n' 
         print(f"Metrics for run {run_id} ({run_name}): {metrics}")
     
     # Renderiza la plantilla HTML con la lista de experimentos
