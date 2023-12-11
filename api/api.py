@@ -60,7 +60,7 @@ def model_output():
             input_data = pd.DataFrame({"age": [age], "bmi": [bmi], "bp": [bp], "s1": [s1], "s2": [s2], "s3": [s3], "s4": [s4], "s5": [s5], "s6": [s6]})
             prediction = loaded_model.predict(pd.DataFrame(input_data))
 
-            response = make_response(prediction)
+            response = make_response(str(prediction))
             response.headers["Content-Type"] = "text/plain"
             return response
 
