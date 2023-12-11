@@ -28,9 +28,8 @@ def fetch_best_model_uri():
                     lowest_mse = current_mse
                     best_model = run_name
 
-        for run_name_ in run_name.items():
-            if (run_name_ == best_model):
-                best_model_run_id = run_id
+        if (run_name == best_model):
+            best_model_run_id = run_id
 
 
     # Obtiene la URI del modelo
