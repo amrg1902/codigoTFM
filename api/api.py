@@ -48,12 +48,13 @@ def index():
         # Obtén el valor de la métrica (MSE) del mejor modelo
         experimento_id = mlflow.get_experiment_by_name(nombre_experimento).experiment_id
         best_model_run = mlflow.search_runs(experiment_ids=experimento_id, filter_string=f"run_name = '{best_model_name}'").iloc[0]
-        best_model_metric = best_model_run["MSE"]
+        #best_model_metric = best_model_run["MSE"]
 
     # Imprime los valores en la consola
     print(f"Mejor modelo: {best_model_name}")
-    print(f"Métrica asociada: {best_model_metric}")
-    
+    print(f"Mejor modelo run: {best_model_run}")
+    #print(f"Métrica asociada: {best_model_run}")
+
 
 # @app.route('/')
 # def index():
