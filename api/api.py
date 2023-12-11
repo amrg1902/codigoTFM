@@ -52,12 +52,49 @@ def model_output():
         s4 = float(request.args.get('s4'))
         s5 = float(request.args.get('s5'))
         s6 = float(request.args.get('s6'))
+        def map_age(value):
+            return value * 55 + 55
+
+        def map_bmi(value):
+            return value * 20 + 20
+
+        def map_bp(value):
+            return value * 37.5 + 97.5
+
+        def map_s1(value):
+            return value * 50 + 200
+
+        def map_s2(value):
+            return value * 80 + 140
+
+        def map_s3(value):
+            return value * 30 + 60
+
+        def map_s4(value):
+            return value * 3 + 3
+
+        def map_s5(value):
+            return value * 35 + 185
+
+        def map_s6(value):
+            return value * 50 + 110
+
         # Carga la URI del mejor modelo
         logged_model = fetch_best_model_uri()
         if logged_model:
             # Load model as a PyFuncModel.
             loaded_model = mlflow.pyfunc.load_model(logged_model)
             input_data = pd.DataFrame({"age": [age], "bmi": [bmi], "bp": [bp], "s1": [s1], "s2": [s2], "s3": [s3], "s4": [s4], "s5": [s5], "s6": [s6]})
+            # Aplicar las mismas transformaciones que se aplicaron durante el entrenamiento
+            input_data['age'] = input_data['age'].apply(map_age)
+            input_data['bmi'] = input_data['bmi'].apply(map_bmi)
+            input_data['bp'] = input_data['bp'].apply(map_bp)
+            input_data['s1'] = input_data['s1'].apply(map_s1)
+            input_data['s2'] = input_data['s2'].apply(map_s2)
+            input_data['s3'] = input_data['s3'].apply(map_s3)
+            input_data['s4'] = input_data['s4'].apply(map_s4)
+            input_data['s5'] = input_data['s5'].apply(map_s5)
+            input_data['s6'] = input_data['s6'].apply(map_s6)
             prediction = loaded_model.predict(pd.DataFrame(input_data))
 
             response = make_response(str(prediction))
