@@ -42,8 +42,9 @@ def fetch_model(model_name):
 def index():
 
     best_model = fetch_best_model()
+    mejor = fetch_model(best_model)
 
-    return best_model
+    return mejor
 
 
 # @app.route('/')
