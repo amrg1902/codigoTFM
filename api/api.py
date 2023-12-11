@@ -1,7 +1,6 @@
-from flask import Flask,  render_template, request, jsonify
+from flask import Flask,  render_template, request, jsonify, make_response
 import pandas as pd
 import mlflow
-import json
 
 app = Flask(__name__)
 # Configura la URI de seguimiento de MLflow
@@ -60,14 +59,10 @@ def model_output():
             loaded_model = mlflow.pyfunc.load_model(logged_model)
             input_data = pd.DataFrame({"age": [age], "bmi": [bmi], "bp": [bp], "s1": [s1], "s2": [s2], "s3": [s3], "s4": [s4], "s5": [s5], "s6": [s6]})
             prediction = loaded_model.predict(pd.DataFrame(input_data))
-            # return prediction
-        # Convierte el objeto ndarray a una cadena JSON
-            prediction_json = json.dumps(prediction.tolist())
 
-        # Devuelve la cadena JSON como respuesta
-            return jsonify(prediction_json)
-    
-
+            response = make_response(prediction)
+            response.headers["Content-Type"] = "text/plain"
+            return response
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=7654)

@@ -3,4 +3,3 @@ prometheus_client
 mlflow
 pandas
 scikit-learn
-json
