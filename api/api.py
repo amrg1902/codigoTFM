@@ -2,7 +2,6 @@ from fastapi import FastAPI, HTTPException
 from fastapi.responses import PlainTextResponse, HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from prometheus_fastapi_instrumentator import Instrumentator
-from sklearn.preprocessing import StandardScaler
 import pandas as pd
 import mlflow
 import uvicorn
@@ -11,16 +10,11 @@ import numpy as np
 
 
 app = FastAPI()
-# Crear un objeto StandardScaler
-scaler = StandardScaler()
+
 
 # Configura la URI de seguimiento de MLflow
 mlflow.set_tracking_uri("http://mlflow_container:80")
 nombre_experimento = "Entrenamiento dataset Diabetes"
-
-
-
-
 
 
 # Rangos deseados
@@ -90,10 +84,6 @@ def fetch_best_model_uri():
 # Montar la carpeta 'static' para servir archivos estáticos (como el HTML)
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
-# @app.on_event("startup")
-# async def startup():
-#    Instrumentator().instrument(app).expose(app)
-
 # Función asincrónica para configurar el Instrumentator
 async def configure_instrumentator():
     await asyncio.sleep(1)  # Puedes esperar si es necesario
@@ -108,7 +98,6 @@ def configure_instrumentator_thread():
 # Configurar el Instrumentator en un hilo separado
 thread = threading.Thread(target=configure_instrumentator_thread)
 thread.start()
-
 
 
 @app.get("/", response_class=HTMLResponse)
@@ -131,11 +120,8 @@ def model_output(
         # Aplicar la transformación y estandarización a los datos de entrada
         transformed_data = apply_transformation(input_data)
 
-        # Estandarizar los datos de prueba utilizando el mismo scaler
-        X_test_scaled = scaler.transform(transformed_data)
-
         # Realizar predicciones en los datos estandarizados
-        predictions = loaded_model.predict(pd.DataFrame(X_test_scaled))
+        predictions = loaded_model.predict(pd.DataFrame(transformed_data))
 
         return PlainTextResponse(str(predictions[0]), media_type="text/plain")
 
