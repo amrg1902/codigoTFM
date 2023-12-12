@@ -102,9 +102,10 @@ def model_output(
 
         # Aplicar la transformación y estandarización a los datos de entrada
         transformed_data = apply_transformation(input_data)
-
-        # Realizar predicciones en los datos estandarizados
-        predictions = loaded_model.predict(pd.DataFrame(transformed_data))
+        # Asegúrate de que transformed_data es un array bidimensional
+        transformed_data_2d = np.reshape(transformed_data, (1, -1))
+        # Crea el DataFrame
+        predictions = loaded_model.predict(pd.DataFrame(transformed_data_2d))
 
         return PlainTextResponse(str(predictions[0]), media_type="text/plain")
 
