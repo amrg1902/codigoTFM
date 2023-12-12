@@ -1,6 +1,7 @@
 from fastapi import FastAPI, HTTPException
 from fastapi.responses import PlainTextResponse, HTMLResponse
 from fastapi.staticfiles import StaticFiles
+from prometheus_fastapi_instrumentator import Instrumentator
 import pandas as pd
 import mlflow
 import uvicorn
@@ -38,9 +39,10 @@ def fetch_best_model_uri():
 # Montar la carpeta 'static' para servir archivos estáticos (como el HTML)
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
-# @app.get("/")
-# def read_root():
-#     return {"message": "Hello, World!"}
+@app.on_event("startup")
+async def startup():
+    Instrumentator().instrument(app).expose(app)
+
 
 @app.get("/", response_class=HTMLResponse)
 def read_form():
