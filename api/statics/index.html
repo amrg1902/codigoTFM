@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FastAPI Prediction Form</title>
+</head>
+<body>
+    <h1>FastAPI Prediction Form</h1>
+    <form id="predictionForm">
+        <label for="age">Age:</label>
+        <input type="number" id="age" name="age" required><br>
+
+        <label for="bmi">BMI:</label>
+        <input type="number" id="bmi" name="bmi" required><br>
+
+        <label for="bp">Blood Pressure:</label>
+        <input type="number" id="bp" name="bp" required><br>
+
+        <label for="s1">S1:</label>
+        <input type="number" id="s1" name="s1" required><br>
+
+        <label for="s2">S2:</label>
+        <input type="number" id="s2" name="s2" required><br>
+
+        <label for="s3">S3:</label>
+        <input type="number" id="s3" name="s3" required><br>
+
+        <label for="s4">S4:</label>
+        <input type="number" id="s4" name="s4" required><br>
+
+        <label for="s5">S5:</label>
+        <input type="number" id="s5" name="s5" required><br>
+
+        <label for="s6">S6:</label>
+        <input type="number" id="s6" name="s6" required><br>
+
+        <button type="button" onclick="submitForm()">Predict</button>
+    </form>
+
+    <h2>Model Prediction:</h2>
+    <div id="predictionResult"></div>
+
+    <script>
+        function submitForm() {
+            // Obtener los valores del formulario
+            const age = document.getElementById('age').value;
+            const bmi = document.getElementById('bmi').value;
+            const bp = document.getElementById('bp').value;
+            const s1 = document.getElementById('s1').value;
+            const s2 = document.getElementById('s2').value;
+            const s3 = document.getElementById('s3').value;
+            const s4 = document.getElementById('s4').value;
+            const s5 = document.getElementById('s5').value;
+            const s6 = document.getElementById('s6').value;
+
+            // Realizar una solicitud a la API
+            fetch(`/predict/?age=${age}&bmi=${bmi}&bp=${bp}&s1=${s1}&s2=${s2}&s3=${s3}&s4=${s4}&s5=${s5}&s6=${s6}`)
+                .then(response => response.text())
+                .then(data => {
+                    // Mostrar el resultado en la página
+                    document.getElementById('predictionResult').innerText = `Prediction: ${data}`;
+                })
+                .catch(error => console.error('Error:', error));
+        }
+    </script>
+</body>
+</html>

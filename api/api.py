@@ -1,5 +1,6 @@
 from fastapi import FastAPI, HTTPException
 from fastapi.responses import PlainTextResponse
+from fastapi.staticfiles import StaticFiles
 import pandas as pd
 import mlflow
 
@@ -33,9 +34,16 @@ def fetch_best_model_uri():
     model_uri = f"runs:/{best_model_run_id}/{best_model}"
     return model_uri
 
-@app.get("/")
-def read_root():
-    return {"message": "Hello, World!"}
+# Montar la carpeta 'static' para servir archivos estáticos (como el HTML)
+app.mount("/static", StaticFiles(directory="static"), name="static")
+
+# @app.get("/")
+# def read_root():
+#     return {"message": "Hello, World!"}
+
+@app.get("/", response_class=HTMLResponse)
+def read_form():
+    return open("static/index.html", "r").read()
 
 @app.get("/predict/")
 def model_output(
