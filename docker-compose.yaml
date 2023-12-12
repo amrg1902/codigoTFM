@@ -10,13 +10,7 @@ services:
       - mlflow_network
     ports: 
       - "5432:5432"
-  #     ############PRUEBO LA APP###############
-  # app:
-  #   build: app
-  #   ports:
-  #     - 8501:8501
-  #    ############PRUEBO LA APP###############
-    ############## PRUEBO LA API ############
+
   api:
     build:
       context: .
@@ -28,7 +22,7 @@ services:
       - "7654:7654"
     depends_on:
       - mlflow_container
-    ############## PRUEBO LA API ############
+
   mlflow_container:
     build:
       context: .
@@ -79,7 +73,9 @@ services:
       - "3000:3000"
     volumes:
       - ./grafana/grafana.ini:/etc/grafana/grafana.ini
-      - ./grafana/provisioning:/etc/grafana/provisioning
+      - ./grafana/datasource.yml:/etc/grafana/provisioning/datasources/datasource.yml
+      - ./grafana/dashboard.json:/etc/grafana/provisioning/dashboards/dashboard.json
+      - ./grafana/dashboard.yml:/etc/grafana/provisioning/dashboards/default.yml
     environment:
       - GF_SECURITY_ADMIN_PASSWORD=admin
     networks:

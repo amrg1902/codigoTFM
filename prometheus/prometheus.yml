@@ -10,8 +10,14 @@
 global:
   scrape_interval: 15s
   evaluation_interval: 15s
+  externa_labels:
+    monitor: "api"
 
 scrape_configs:
   - job_name: 'mlflow'
     static_configs:
       - targets: ['mlflow_exporter:8000']  # Ajusta el nombre y puerto del contenedor del servidor exportador
+  
+  - job_name: "prometheus" # Para que monitoree las métricas de prometheus
+    static_configs:
+      - targets: ["prometheus:9090"]
