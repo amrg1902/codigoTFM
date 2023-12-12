@@ -41,7 +41,16 @@ app.mount("/static", StaticFiles(directory="static"), name="static")
 
 # @app.on_event("startup")
 # async def startup():
-Instrumentator().instrument(app).expose(app)
+#    Instrumentator().instrument(app).expose(app)
+
+# Función asincrónica para configurar el Instrumentator
+async def configure_instrumentator():
+    await asyncio.sleep(1)  # Puedes esperar si es necesario
+    Instrumentator().instrument(app).expose(app)
+
+# Configurar el Instrumentator en un hilo separado
+thread = threading.Thread(target=lambda: asyncio.run(configure_instrumentator()))
+thread.start()
 
 
 @app.get("/", response_class=HTMLResponse)
