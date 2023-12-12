@@ -6,3 +6,4 @@ scikit-learn
 fastapi
 prometheus_fastapi_instrumentator
 uvicorn
+numpy

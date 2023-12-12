@@ -2,16 +2,66 @@ from fastapi import FastAPI, HTTPException
 from fastapi.responses import PlainTextResponse, HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from prometheus_fastapi_instrumentator import Instrumentator
+from sklearn.preprocessing import StandardScaler
 import pandas as pd
 import mlflow
 import uvicorn
 import threading, asyncio
+import numpy as np
+
 
 app = FastAPI()
+# Crear un objeto StandardScaler
+scaler = StandardScaler()
 
 # Configura la URI de seguimiento de MLflow
 mlflow.set_tracking_uri("http://mlflow_container:80")
 nombre_experimento = "Entrenamiento dataset Diabetes"
+
+
+
+
+
+
+# Rangos deseados
+desired_ranges = {
+    'age': (-0.107226, 0.110727),
+    'bmi': (-0.090275, 0.170555),
+    'bp': (-0.112399, 0.132044),
+    's1': (-0.126781, 0.153914),
+    's2': (-0.115613, 0.198788),
+    's3': (-0.102307, 0.181179),
+    's4': (-0.076395, 0.185234),
+    's5': (-0.126097, 0.133597),
+    's6': (-0.137767, 0.135612)
+}
+
+# Calcular coeficientes de escala (a) y términos de sesgo (b) para cada característica
+transform_params = {}
+for feature in original_data.keys():
+    original_min, original_max = original_data[feature], original_data[feature]
+    desired_min, desired_max = desired_ranges[feature]
+
+    # Manejar el caso en que original_min y original_max son iguales
+    if original_min == original_max:
+        a = 0
+        b = desired_min
+    else:
+        a = (desired_max - desired_min) / (original_max - original_min)
+        b = desired_min - a * original_min
+
+    transform_params[feature] = {'a': a, 'b': b}
+
+def apply_transformation(data):
+    # Aplicar la transformación lineal a los datos originales
+    mapped_data = {feature: transform_params[feature]['a'] * value + transform_params[feature]['b']
+                   for feature, value in data.items()}
+
+    # Convertir el diccionario a un array
+    data_array = np.array([list(mapped_data.values())])
+
+    return data_array
+
 
 def fetch_best_model_uri():
     lowest_mse = float('inf')
@@ -70,33 +120,6 @@ def model_output(
     age: float, bmi: float, bp: float, s1: float, s2: float, s3: float, 
     s4: float, s5: float, s6: float
 ):
-    def map_age(value):
-        return value * 55 + 55
-
-    def map_bmi(value):
-        return value * 20 + 20
-
-    def map_bp(value):
-        return value * 37.5 + 97.5
-
-    def map_s1(value):
-        return value * 50 + 200
-
-    def map_s2(value):
-        return value * 80 + 140
-
-    def map_s3(value):
-        return value * 30 + 60
-
-    def map_s4(value):
-        return value * 3 + 3
-
-    def map_s5(value):
-        return value * 35 + 185
-
-    def map_s6(value):
-        return value * 50 + 110
-
     logged_model = fetch_best_model_uri()
     if logged_model:
         loaded_model = mlflow.pyfunc.load_model(logged_model)
@@ -105,19 +128,23 @@ def model_output(
             "s3": [s3], "s4": [s4], "s5": [s5], "s6": [s6]
         })
 
-        input_data['age'] = input_data['age'].apply(map_age)
-        input_data['bmi'] = input_data['bmi'].apply(map_bmi)
-        input_data['bp'] = input_data['bp'].apply(map_bp)
-        input_data['s1'] = input_data['s1'].apply(map_s1)
-        input_data['s2'] = input_data['s2'].apply(map_s2)
-        input_data['s3'] = input_data['s3'].apply(map_s3)
-        input_data['s4'] = input_data['s4'].apply(map_s4)
-        input_data['s5'] = input_data['s5'].apply(map_s5)
-        input_data['s6'] = input_data['s6'].apply(map_s6)
+        # Aplicar la transformación y estandarización a los datos de entrada
+        transformed_data = apply_transformation(input_data)
 
-        prediction = loaded_model.predict(pd.DataFrame(input_data))
+        # Estandarizar los datos de prueba utilizando el mismo scaler
+        X_test_scaled = scaler.transform(transformed_data)
 
-        return PlainTextResponse(str(prediction), media_type="text/plain")
+        # Realizar predicciones en los datos estandarizados
+        predictions = loaded_model.predict(pd.DataFrame(X_test_scaled))
+
+        return PlainTextResponse(str(predictions[0]), media_type="text/plain")
+
+    else:
+        raise HTTPException(status_code=500, detail="No model available.")
+
+        # prediction = loaded_model.predict(pd.DataFrame(input_data))
+
+        # return PlainTextResponse(str(prediction), media_type="text/plain")
 
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=7654)
