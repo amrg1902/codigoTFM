@@ -84,22 +84,6 @@ def fetch_best_model_uri():
 # Montar la carpeta 'static' para servir archivos estáticos (como el HTML)
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
-# Función asincrónica para configurar el Instrumentator
-async def configure_instrumentator():
-    await asyncio.sleep(1)  # Puedes esperar si es necesario
-    Instrumentator().instrument(app).expose(app)
-
-# Función para configurar el Instrumentator en un hilo separado
-def configure_instrumentator_thread():
-    loop = asyncio.new_event_loop()
-    asyncio.set_event_loop(loop)
-    loop.run_until_complete(configure_instrumentator())
-
-# Configurar el Instrumentator en un hilo separado
-thread = threading.Thread(target=configure_instrumentator_thread)
-thread.start()
-
-
 @app.get("/", response_class=HTMLResponse)
 def read_form():
     return open("static/index.html", "r").read()
