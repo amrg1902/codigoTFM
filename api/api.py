@@ -36,23 +36,23 @@ desired_ranges = {
     's6': (-0.137767, 0.135612)
 }
 
-# Calcular coeficientes de escala (a) y términos de sesgo (b) para cada característica
-transform_params = {}
-for feature in original_data.keys():
-    original_min, original_max = original_data[feature], original_data[feature]
-    desired_min, desired_max = desired_ranges[feature]
-
-    # Manejar el caso en que original_min y original_max son iguales
-    if original_min == original_max:
-        a = 0
-        b = desired_min
-    else:
-        a = (desired_max - desired_min) / (original_max - original_min)
-        b = desired_min - a * original_min
-
-    transform_params[feature] = {'a': a, 'b': b}
-
 def apply_transformation(data):
+    transform_params = {}
+    
+    for feature in data.keys():
+        original_min = data[feature]
+        original_max = data[feature]
+        desired_min, desired_max = desired_ranges[feature]
+
+        if original_min == original_max:
+            a = 0
+            b = desired_min
+        else:
+            a = (desired_max - desired_min) / (original_max - original_min)
+            b = desired_min - a * original_min
+
+        transform_params[feature] = {'a': a, 'b': b}
+
     # Aplicar la transformación lineal a los datos originales
     mapped_data = {feature: transform_params[feature]['a'] * value + transform_params[feature]['b']
                    for feature, value in data.items()}
@@ -141,10 +141,6 @@ def model_output(
 
     else:
         raise HTTPException(status_code=500, detail="No model available.")
-
-        # prediction = loaded_model.predict(pd.DataFrame(input_data))
-
-        # return PlainTextResponse(str(prediction), media_type="text/plain")
 
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=7654)
