@@ -1,8 +1,9 @@
 from fastapi import FastAPI, HTTPException
-from fastapi.responses import PlainTextResponse
+from fastapi.responses import PlainTextResponse, HTMLResponse
 from fastapi.staticfiles import StaticFiles
 import pandas as pd
 import mlflow
+import uvicorn
 
 app = FastAPI()
 
@@ -100,6 +101,4 @@ def model_output(
         return PlainTextResponse(str(prediction), media_type="text/plain")
 
 if __name__ == "__main__":
-    import uvicorn
-
     uvicorn.run(app, host="0.0.0.0", port=7654)
