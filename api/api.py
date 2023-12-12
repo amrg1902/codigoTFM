@@ -5,6 +5,7 @@ from prometheus_fastapi_instrumentator import Instrumentator
 import pandas as pd
 import mlflow
 import uvicorn
+import threading
 
 app = FastAPI()
 
