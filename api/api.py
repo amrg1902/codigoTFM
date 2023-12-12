@@ -38,7 +38,7 @@ def apply_transformation(data):
         original_max = data[feature]
         desired_min, desired_max = desired_ranges[feature]
 
-        if original_min == original_max:
+        if (original_min == original_max).all():
             a = 0
             b = desired_min
         else:
@@ -91,8 +91,7 @@ def read_form():
 @app.get("/predict/")
 def model_output(
     age: float, bmi: float, bp: float, s1: float, s2: float, s3: float, 
-    s4: float, s5: float, s6: float
-):
+    s4: float, s5: float, s6: float):
     logged_model = fetch_best_model_uri()
     if logged_model:
         loaded_model = mlflow.pyfunc.load_model(logged_model)
