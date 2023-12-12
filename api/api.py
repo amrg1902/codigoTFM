@@ -5,7 +5,7 @@ from prometheus_fastapi_instrumentator import Instrumentator
 import pandas as pd
 import mlflow
 import uvicorn
-import threading
+import threading, asyncio
 
 app = FastAPI()
 
@@ -49,9 +49,16 @@ async def configure_instrumentator():
     await asyncio.sleep(1)  # Puedes esperar si es necesario
     Instrumentator().instrument(app).expose(app)
 
+# Función para configurar el Instrumentator en un hilo separado
+def configure_instrumentator_thread():
+    loop = asyncio.new_event_loop()
+    asyncio.set_event_loop(loop)
+    loop.run_until_complete(configure_instrumentator())
+
 # Configurar el Instrumentator en un hilo separado
-thread = threading.Thread(target=lambda: asyncio.run(configure_instrumentator()))
+thread = threading.Thread(target=configure_instrumentator_thread)
 thread.start()
+
 
 
 @app.get("/", response_class=HTMLResponse)
