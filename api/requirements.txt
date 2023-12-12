@@ -3,3 +3,5 @@ prometheus_client
 mlflow
 pandas
 scikit-learn
+fastapi
+prometheus_fastapi_instrumentator
