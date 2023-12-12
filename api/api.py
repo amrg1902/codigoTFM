@@ -39,9 +39,9 @@ def fetch_best_model_uri():
 # Montar la carpeta 'static' para servir archivos estáticos (como el HTML)
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
-@app.on_event("startup")
-async def startup():
-    Instrumentator().instrument(app).expose(app)
+# @app.on_event("startup")
+# async def startup():
+Instrumentator().instrument(app).expose(app)
 
 
 @app.get("/", response_class=HTMLResponse)
