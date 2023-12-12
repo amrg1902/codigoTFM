@@ -10,7 +10,7 @@
 global:
   scrape_interval: 15s
   evaluation_interval: 15s
-  externa_labels:
+  external_labels:
     monitor: "api"
 
 scrape_configs:
