@@ -1,4 +1,4 @@
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Query
 from fastapi.responses import PlainTextResponse, HTMLResponse
 from fastapi.staticfiles import StaticFiles
 import pandas as pd
@@ -45,23 +45,33 @@ def read_form():
 
 @app.get("/predict/")
 def model_output(
-    age: float, bmi: float, bp: float, s1: float, s2: float, s3: float, 
-    s4: float, s5: float, s6: float):
+    feature_1: float = Query(..., description="Feature 1"),
+    feature_2: float = Query(..., description="Feature 2"),
+    feature_3: float = Query(..., description="Feature 3"),
+    feature_4: float = Query(..., description="Feature 4"),
+    feature_5: float = Query(..., description="Feature 5"),
+    feature_6: float = Query(..., description="Feature 6"),
+    feature_7: float = Query(..., description="Feature 7"),
+    feature_8: float = Query(..., description="Feature 8"),
+    feature_9: float = Query(..., description="Feature 9"),
+    feature_10: float = Query(..., description="Feature 10"),
+    feature_11: float = Query(..., description="Feature 11"),
+    feature_12: float = Query(..., description="Feature 12"),
+    feature_13: float = Query(..., description="Feature 13"),
+):
     logged_model = fetch_best_model_uri()
     if logged_model:
         loaded_model = mlflow.pyfunc.load_model(logged_model)
         input_data = pd.DataFrame({
-            "age": [age], "bmi": [bmi], "bp": [bp], "s1": [s1], "s2": [s2],
-            "s3": [s3], "s4": [s4], "s5": [s5], "s6": [s6]
+            "feature_1": [feature_1], "feature_2": [feature_2], "feature_3": [feature_3],
+            "feature_4": [feature_4], "feature_5": [feature_5], "feature_6": [feature_6],
+            "feature_7": [feature_7], "feature_8": [feature_8], "feature_9": [feature_9],
+            "feature_10": [feature_10], "feature_11": [feature_11], "feature_12": [feature_12],
+            "feature_13": [feature_13]
         })
 
-        # Aplicar la transformación y estandarización a los datos de entrada
-        transformed_data = apply_transformation(input_data)
-        # Asegúrate de que transformed_data es un array bidimensional
-        transformed_data_2d = np.reshape(transformed_data, (1, -1))
-        # Convertir el array a un DataFrame de pandas
-        df_transformed = pd.DataFrame(transformed_data_2d, columns=['feature_1', 'feature_2', 'feature_3', 'feature_4', 'feature_5', 'feature_6', 'feature_7', 'feature_8', 'feature_9'])
-
+        # Asegúrate de que input_data es un array bidimensional
+        transformed_data_2d = np.reshape(input_data, (1, -1))
         # Crea el DataFrame
         predictions = loaded_model.predict(pd.DataFrame(transformed_data_2d))
 

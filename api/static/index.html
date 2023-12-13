@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -139,6 +139,145 @@
                 .then(data => {
                     // Mostrar el resultado en la página
                     document.getElementById('predictionResult').innerText = `Tu vino es del tipo: ${data}`;
+                })
+                .catch(error => console.error('Error:', error));
+        }
+    </script>
+</body>
+</html>
+ -->
+
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wine Prediction Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 300px;
+            width: 100%;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        label {
+            flex-basis: 100%;
+            color: #555;
+        }
+
+        input {
+            flex-basis: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            background-color: #4caf50;
+            color: #fff;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        h2 {
+            margin-top: 20px;
+            color: #333;
+        }
+
+        #predictionResult {
+            color: #555;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <form id="predictionForm">
+        <h2>Wine Prediction Form</h2>
+
+        <label for="feature_1">Alcohol:</label>
+        <input type="number" id="feature_1" name="feature_1" required>
+
+        <label for="feature_2">Malic Acid:</label>
+        <input type="number" id="feature_2" name="feature_2" required>
+
+        <label for="feature_3">Ash:</label>
+        <input type="number" id="feature_3" name="feature_3" required>
+
+        <label for="feature_4">Alcalinity of Ash:</label>
+        <input type="number" id="feature_4" name="feature_1" required>
+
+        <label for="feature_5">Magnesium:</label>
+        <input type="number" id="feature_5" name="feature_5" required>
+
+        <label for="feature_6">Total Phenols:</label>
+        <input type="number" id="feature_6" name="feature_6" required>
+
+        <label for="feature_7">Flavanoids:</label>
+        <input type="number" id="feature_7" name="feature_7" required>
+
+        <label for="feature_8">Nonflavanoid Phenols:</label>
+        <input type="number" id="feature_8" name="feature_8" required>
+
+        <label for="feature_9">Proanthocyanins:</label>
+        <input type="number" id="feature_9" name="feature_9" required>
+
+        <label for="feature_10">Color Intensity:</label>
+        <input type="number" id="feature_10" name="feature_10" required>
+
+        <label for="feature_11">Hue:</label>
+        <input type="number" id="feature_11" name="feature_11" required>
+
+        <label for="feature_12">OD280/OD315:</label>
+        <input type="number" id="feature_12" name="feature_12" required>
+
+        <label for="feature_13">Proline:</label>
+        <input type="number" id="feature_13" name="feature_13" required>
+
+        <button type="button" onclick="submitForm()">Predict</button>
+    </form>
+
+    <div id="predictionResult"></div>
+
+    <script>
+        function submitForm() {
+            const features = [
+                'feature_1', 'feature_2', 'feature_3', 'feature_4', 'feature_5', 'feature_6', 'feature_7', 'feature_8', 'feature_9', 'feature_10', 'feature_11', 'feature_12', 'feature_13'
+            ];
+
+            const data = features.reduce((acc, feature) => {
+                acc[feature] = document.getElementById(feature).value;
+                return acc;
+            }, {});
+
+            fetch(`/predict/?${new URLSearchParams(data)}`)
+                .then(response => response.text())
+                .then(prediction => {
+                    document.getElementById('predictionResult').innerText = `Prediction: ${prediction}`;
                 })
                 .catch(error => console.error('Error:', error));
         }
