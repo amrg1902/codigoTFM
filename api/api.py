@@ -16,7 +16,7 @@ def fetch_best_model_uri():
     lowest_mse = float('inf')
     experimento_id = mlflow.get_experiment_by_name(nombre_experimento).experiment_id
     runs = mlflow.search_runs(experiment_ids=experimento_id)
-
+    highest_accuracy = 0
     for index, run in runs.iterrows():
         run_id = run.run_id
         run_info = mlflow.get_run(run_id).info
