@@ -8,13 +8,11 @@ import uvicorn
 import threading, asyncio
 import numpy as np
 
-
 app = FastAPI()
-
 
 # Configura la URI de seguimiento de MLflow
 mlflow.set_tracking_uri("http://mlflow_container:80")
-nombre_experimento = "Entrenamiento dataset Diabetes"
+nombre_experimento = "Entrenamiento dataset vino"
 
 
 # Rangos deseados
@@ -33,23 +31,26 @@ desired_ranges = {
 def apply_transformation(data):
     transform_params = {}
     
-    for feature in data.keys():
-        original_min = data[feature]
-        original_max = data[feature]
+    for feature, value in data.items():
         desired_min, desired_max = desired_ranges[feature]
 
-        if (original_min == original_max).all():
+        if value == desired_min:
             a = 0
             b = desired_min
         else:
-            a = (desired_max - desired_min) / (original_max - original_min)
-            b = desired_min - a * original_min
+            a = (desired_max - desired_min) / (value - desired_min)
+            b = desired_min - a * value
 
         transform_params[feature] = {'a': a, 'b': b}
+        
+   
 
     # Aplicar la transformación lineal a los datos originales
-    mapped_data = {feature: transform_params[feature]['a'] * value + transform_params[feature]['b']
-                   for feature, value in data.items()}
+    mapped_data = {}
+    for feature in data.keys():
+        mapped_data[feature] = transform_params[feature]['a'] + transform_params[feature]['b']
+
+  
 
     # Convertir el diccionario a un array
     data_array = np.array([list(mapped_data.values())])
@@ -104,6 +105,9 @@ def model_output(
         transformed_data = apply_transformation(input_data)
         # Asegúrate de que transformed_data es un array bidimensional
         transformed_data_2d = np.reshape(transformed_data, (1, -1))
+        # Convertir el array a un DataFrame de pandas
+        df_transformed = pd.DataFrame(transformed_data_2d, columns=['feature_1', 'feature_2', 'feature_3', 'feature_4', 'feature_5', 'feature_6', 'feature_7', 'feature_8', 'feature_9'])
+
         # Crea el DataFrame
         predictions = loaded_model.predict(pd.DataFrame(transformed_data_2d))
 
