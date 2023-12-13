@@ -62,18 +62,23 @@ def model_output(
     logged_model = fetch_best_model_uri()
     if logged_model:
         loaded_model = mlflow.pyfunc.load_model(logged_model)
-        input_data = pd.DataFrame({
-            "feature_1": [feature_1], "feature_2": [feature_2], "feature_3": [feature_3],
-            "feature_4": [feature_4], "feature_5": [feature_5], "feature_6": [feature_6],
-            "feature_7": [feature_7], "feature_8": [feature_8], "feature_9": [feature_9],
-            "feature_10": [feature_10], "feature_11": [feature_11], "feature_12": [feature_12],
-            "feature_13": [feature_13]
-        })
+        # input_data = pd.DataFrame({
+        #     "feature_1": [feature_1], "feature_2": [feature_2], "feature_3": [feature_3],
+        #     "feature_4": [feature_4], "feature_5": [feature_5], "feature_6": [feature_6],
+        #     "feature_7": [feature_7], "feature_8": [feature_8], "feature_9": [feature_9],
+        #     "feature_10": [feature_10], "feature_11": [feature_11], "feature_12": [feature_12],
+        #     "feature_13": [feature_13]
+        # })
+        # input_data = np.array([[
+        #     [feature_1], [feature_2], [feature_3], [feature_4], [feature_4], [feature_6], [feature_7], [feature_8], [feature_9], [feature_10], [feature_11], [feature_12], [feature_13]
+        # ]])
+        # Crear el array input_data
+        input_data = np.array([
+            [feature_1, feature_2, feature_3, feature_4, feature_5, feature_6, feature_7, feature_8, feature_9, feature_10, feature_11, feature_12, feature_13]
+        ])
 
-        # Asegúrate de que input_data es un array bidimensional
-        transformed_data_2d = np.reshape(input_data, (1, -1))
         # Crea el DataFrame
-        predictions = loaded_model.predict(pd.DataFrame(transformed_data_2d))
+        predictions = loaded_model.predict(input_data)
 
         return PlainTextResponse(str(predictions[0]), media_type="text/plain")
 
