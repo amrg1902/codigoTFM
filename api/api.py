@@ -1,11 +1,9 @@
 from fastapi import FastAPI, HTTPException
 from fastapi.responses import PlainTextResponse, HTMLResponse
 from fastapi.staticfiles import StaticFiles
-from prometheus_fastapi_instrumentator import Instrumentator
 import pandas as pd
 import mlflow
 import uvicorn
-import threading, asyncio
 import numpy as np
 
 app = FastAPI()
@@ -13,50 +11,6 @@ app = FastAPI()
 # Configura la URI de seguimiento de MLflow
 mlflow.set_tracking_uri("http://mlflow_container:80")
 nombre_experimento = "Entrenamiento dataset vino"
-
-
-# Rangos deseados
-desired_ranges = {
-    'age': (-0.107226, 0.110727),
-    'bmi': (-0.090275, 0.170555),
-    'bp': (-0.112399, 0.132044),
-    's1': (-0.126781, 0.153914),
-    's2': (-0.115613, 0.198788),
-    's3': (-0.102307, 0.181179),
-    's4': (-0.076395, 0.185234),
-    's5': (-0.126097, 0.133597),
-    's6': (-0.137767, 0.135612)
-}
-
-def apply_transformation(data):
-    transform_params = {}
-    
-    for feature, value in data.items():
-        desired_min, desired_max = desired_ranges[feature]
-
-        if value == desired_min:
-            a = 0
-            b = desired_min
-        else:
-            a = (desired_max - desired_min) / (value - desired_min)
-            b = desired_min - a * value
-
-        transform_params[feature] = {'a': a, 'b': b}
-        
-   
-
-    # Aplicar la transformación lineal a los datos originales
-    mapped_data = {}
-    for feature in data.keys():
-        mapped_data[feature] = transform_params[feature]['a'] + transform_params[feature]['b']
-
-  
-
-    # Convertir el diccionario a un array
-    data_array = np.array([list(mapped_data.values())])
-
-    return data_array
-
 
 def fetch_best_model_uri():
     lowest_mse = float('inf')
@@ -70,10 +24,10 @@ def fetch_best_model_uri():
         metrics = mlflow.get_run(run_id).data.metrics
 
         for metric_name, metric_value in metrics.items():
-            if metric_name == "MSE":
-                current_mse = metric_value
-                if current_mse < lowest_mse:
-                    lowest_mse = current_mse
+            if metric_name == "Accuracy":
+                current_accuracy = metric_value
+                if (current_accuracy > highest_accuracy) & (current_accuracy <= 1):
+                    highest_accuracy = current_accuracy
                     best_model = run_name
 
         if run_name == best_model:
