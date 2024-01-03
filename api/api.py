@@ -6,6 +6,7 @@ import mlflow
 import uvicorn
 import numpy as np
 
+
 app = FastAPI()
 
 # Configura la URI de seguimiento de MLflow

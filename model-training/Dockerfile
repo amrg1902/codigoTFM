@@ -19,5 +19,3 @@ ENV MLFLOW_SERVER_URI http://mlflow_container:80
 
 # Establece el comando por defecto al iniciar el contenedor
 CMD ["python", "train_model.py"]
-
-
