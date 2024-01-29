@@ -44,7 +44,7 @@ services:
       - "8000:8000"
     environment:
       - URI=http://mlflow_container:80
-      - nombre_experimento = "Entrenamiento dataset vino"
+      - nombre_experimento = Entrenamiento_dataset_vino
 
   model_training_container:
     build:
