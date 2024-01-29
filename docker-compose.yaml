@@ -43,7 +43,7 @@ services:
     ports:
       - "8000:8000"
     environment:
-      - URI="http://mlflow_container:80"
+      - URI=http://mlflow_container:80
 
   model_training_container:
     build:
