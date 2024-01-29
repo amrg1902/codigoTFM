@@ -11,7 +11,9 @@ from sklearn.ensemble import RandomForestClassifier, GradientBoostingClassifier
 from sklearn.neighbors import KNeighborsClassifier
 
 uri = os.getenv('URI')
+print(uri)
 nombre_experimento = os.getenv('nombre_experimento')
+print(nombre_experimento)
 
 #Configura la URI de la base de datos y la dirección del servidor de MLflow
 # mlflow.set_tracking_uri(uri)
