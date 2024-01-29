@@ -16,8 +16,8 @@ nombre_experimento = os.getenv('nombre_experimento')
 print(nombre_experimento)
 
 #Configura la URI de la base de datos y la dirección del servidor de MLflow
-# mlflow.set_tracking_uri(uri)
-# mlflow.set_experiment("Entrenamiento dataset vino")
+mlflow.set_tracking_uri(uri)
+mlflow.set_experiment(nombre_experimento)
 
 # Cargar el dataset de vino
 wine = load_wine()
