@@ -10,7 +10,6 @@ import os
 uri = os.getenv('URI')
 nombre_experimento = os.getenv('nombre_experimento')
 
-
 app = Flask(__name__)
 
 # Configura la URI de seguimiento de MLflow
