@@ -10,9 +10,12 @@ from sklearn.metrics import mean_squared_error, r2_score, mean_absolute_error, a
 from sklearn.ensemble import RandomForestClassifier, GradientBoostingClassifier
 from sklearn.neighbors import KNeighborsClassifier
 
+uri = os.getenv('URI')
+nombre_experimento = os.getenv('nombre_experimento')
+
 #Configura la URI de la base de datos y la dirección del servidor de MLflow
-mlflow.set_tracking_uri("http://mlflow_container:80")
-mlflow.set_experiment("Entrenamiento dataset vino")
+# mlflow.set_tracking_uri(uri)
+# mlflow.set_experiment("Entrenamiento dataset vino")
 
 # Cargar el dataset de vino
 wine = load_wine()

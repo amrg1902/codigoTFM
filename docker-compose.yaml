@@ -56,6 +56,9 @@ services:
     depends_on:
       - mlflow_postgres
       - mlflow_container
+    environment:
+      - URI=http://mlflow_container:80
+      - nombre_experimento = Entrenamiento_dataset_vino
 
   prometheus:
     image: prom/prometheus:latest
