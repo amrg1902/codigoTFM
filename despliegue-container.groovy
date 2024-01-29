@@ -4,6 +4,10 @@ pipeline {
     environment {
         workspaceDir = pwd()
     }
+    parameters {
+        string(name: 'URI', defaultValue: '', description: 'URI a utilizar')
+        string(name: 'nombre_experimento', defaultValue: '', description: 'Nombre del experimento')
+    }
     stages {
         stage('Acceso a Dockerfile en el Workspace') {
             steps {
@@ -39,8 +43,8 @@ pipeline {
             steps {
                 script {
                     // Ejecuta el docker-compose
-                    sh "docker-compose -f docker-compose.yaml up -d --build --build-arg URI=${params.URI} --build-arg nombre_experimento=${params.nombre_experimento}"
-                }
+                    sh "URI=${params.URI} nombre_experimento=${params.nombre_experimento} docker-compose -f docker-compose.yaml up -d"
+                    }
             }
         }
 
