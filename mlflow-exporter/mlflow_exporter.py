@@ -8,6 +8,8 @@ from sklearn.metrics import accuracy_score
 import os
 
 uri = os.getenv('URI')
+nombre_experimento = os.getenv('nombre_experimento')
+
 
 app = Flask(__name__)
 
@@ -18,7 +20,7 @@ mlflow.set_tracking_uri(uri)
 def mostrar_experimentos():
 
     # Nombre del experimento
-    nombre_experimento = "Entrenamiento dataset vino"
+    #nombre_experimento = "Entrenamiento dataset vino"
 
     # Obtén el ID del experimento por su nombre
     experimento_id = mlflow.get_experiment_by_name(nombre_experimento).experiment_id
