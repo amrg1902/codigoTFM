@@ -37,19 +37,25 @@ services:
     build:
       context: .
       dockerfile: mlflow-exporter/Dockerfile
+      args:
+        - URI=${URI}
+        - nombre_experimento=${nombre_experimento}
     container_name: mlflow_exporter
     networks:
       - mlflow_network
     ports:
       - "8000:8000"
     environment:
-      - URI=http://mlflow_container:80
-      - nombre_experimento=Entrenamiento_dataset_vino
+      - URI=${URI}
+      - nombre_experimento=${nombre_experimento}
 
   model_training_container:
     build:
       context: .
       dockerfile: model-training/Dockerfile
+      args:
+        - URI=${URI}
+        - nombre_experimento=${nombre_experimento}
     container_name: model_training_container
     networks:
       - mlflow_network
@@ -57,8 +63,8 @@ services:
       - mlflow_postgres
       - mlflow_container
     environment:
-      - URI=http://mlflow_container:80
-      - nombre_experimento=Entrenamiento_dataset_vino
+      - URI=${URI}
+      - nombre_experimento=${nombre_experimento}
 
   prometheus:
     image: prom/prometheus:latest

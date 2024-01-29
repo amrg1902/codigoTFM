@@ -39,7 +39,7 @@ pipeline {
             steps {
                 script {
                     // Ejecuta el docker-compose
-                    sh "docker-compose -f docker-compose.yaml up -d"
+                    sh "docker-compose -f docker-compose.yaml up -d --build --build-arg URI=${params.URI} --build-arg nombre_experimento=${params.nombre_experimento}"
                 }
             }
         }
