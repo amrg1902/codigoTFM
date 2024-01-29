@@ -12,13 +12,13 @@ config.read('config.ini')
 
 uri = config['mlflow']['uri']
 print(uri)
-#mlflow.set_tracking_uri(uri)
+mlflow.set_tracking_uri(uri)
 
 
 app = Flask(__name__)
 
 # Configura la URI de seguimiento de MLflow
-mlflow.set_tracking_uri("$uri")
+#mlflow.set_tracking_uri("$uri")
 
 @app.route('/metrics') #Para que prometheus los raspe correctamente
 def mostrar_experimentos():
