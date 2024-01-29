@@ -5,11 +5,14 @@ from sklearn.datasets import load_breast_cancer
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score
+import os
+
+uri = os.getenv('URI')
 
 app = Flask(__name__)
 
 # Configura la URI de seguimiento de MLflow
-mlflow.set_tracking_uri("http://mlflow_container:80")
+mlflow.set_tracking_uri(uri)
 
 @app.route('/metrics') #Para que prometheus los raspe correctamente
 def mostrar_experimentos():
