@@ -8,6 +8,7 @@ from sklearn.metrics import accuracy_score
 import os
 
 uri = os.getenv('URI')
+print(uri)
 
 app = Flask(__name__)
 
