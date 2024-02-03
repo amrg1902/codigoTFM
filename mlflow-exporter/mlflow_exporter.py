@@ -18,9 +18,6 @@ mlflow.set_tracking_uri(uri)
 @app.route('/metrics') #Para que prometheus los raspe correctamente
 def mostrar_experimentos():
 
-    # Nombre del experimento
-    #nombre_experimento = "Entrenamiento dataset vino"
-
     # Obtén el ID del experimento por su nombre
     experimento_id = mlflow.get_experiment_by_name(nombre_experimento).experiment_id
     # Obtén todas las ejecuciones del experimento
