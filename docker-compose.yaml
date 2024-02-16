@@ -15,6 +15,9 @@ services:
     build:
       context: .
       dockerfile: api/Dockerfile
+      args:
+        - URI=${URI}
+        - nombre_experimento=${nombre_experimento}
     container_name: api
     networks:
       - mlflow_network
