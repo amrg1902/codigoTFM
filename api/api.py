@@ -5,6 +5,7 @@ import pandas as pd
 import mlflow
 import uvicorn
 import numpy as np
+import os
 
 app = FastAPI()
 uri = os.getenv('URI')
