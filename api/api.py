@@ -7,10 +7,13 @@ import uvicorn
 import numpy as np
 
 app = FastAPI()
+uri = os.getenv('URI')
+print(uri)
+nombre_experimento = os.getenv('nombre_experimento')
+print(nombre_experimento)
 
-# Configura la URI de seguimiento de MLflow
-mlflow.set_tracking_uri("http://mlflow_container:80")
-nombre_experimento = "Entrenamiento dataset vino"
+#Configura la URI de la base de datos y la dirección del servidor de MLflow
+mlflow.set_tracking_uri(uri)
 
 def fetch_best_model_uri():
     lowest_mse = float('inf')
