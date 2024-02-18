@@ -25,6 +25,10 @@ services:
       - "7654:7654"
     depends_on:
       - mlflow_container
+    environment:
+      - URI=${URI}
+      - nombre_experimento=${nombre_experimento}
+
 
   mlflow_container:
     build:
