@@ -10,11 +10,12 @@ import os
 app = FastAPI()
 uri = os.getenv('URI')
 print(uri)
-nombre_experimento = os.getenv('nombre_experimento')
-print(nombre_experimento)
+
 
 #Configura la URI de la base de datos y la dirección del servidor de MLflow
 mlflow.set_tracking_uri(uri)
+nombre_experimento = os.getenv('nombre_experimento')
+print(nombre_experimento)
 
 def fetch_best_model_uri():
     lowest_mse = float('inf')
