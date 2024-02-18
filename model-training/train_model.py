@@ -25,7 +25,7 @@ wine = load_wine()
 X, y = wine.data, wine.target
 
 # Dividir los datos en conjuntos de entrenamiento y prueba
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.5, random_state=35)
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
 # Función para evaluar y registrar métricas
 def evaluate_model(model, model_name):
